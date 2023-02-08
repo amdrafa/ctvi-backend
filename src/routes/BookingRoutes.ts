@@ -5,13 +5,13 @@ export const bookingRoutes = Router();
 
 bookingRoutes.get("/list", (request, response) => {
     
-    const allBooking = new BookingService();
+    const bookingService = new BookingService();
 
-    allBooking.list();
+    const allBooking = bookingService.list();
 
     if(!allBooking){
         return response.status(200).json({message: "No data found"});
     }
 
-    return response.status(200).json({allBooking})
+    return response.status(200).json(allBooking)
 })
