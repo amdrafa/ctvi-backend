@@ -1,0 +1,8 @@
+{
+    "type": "postgrees",
+    "port": 5432,
+    "host": "localhost",
+    "username": "ctvi",
+    "password": "bosch",
+    "database": "ctvi-database"
+}
