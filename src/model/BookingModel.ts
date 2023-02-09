@@ -1,5 +1,16 @@
 export class BookingModel{
-    id?: number;
+    constructor(){
+        this.id = null;
+        this.bookingId = null;
+        this.userId = null;
+        this.scheduleId = null;
+        this.status = null;
+        this.createdAt = null;
+        this.deletedAt = null;
+        this.updatedAt = null;
+    }
+
+    id: number;
     bookingId: string;
     userId: number;
     scheduleId: Array<number>;
@@ -7,4 +18,6 @@ export class BookingModel{
     createdAt: Date;
     deletedAt: Date;
     updatedAt: Date;
+
+    
 }
