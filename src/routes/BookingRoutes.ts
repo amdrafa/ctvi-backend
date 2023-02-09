@@ -12,6 +12,5 @@ bookingRoutes.get("/list", (request, response) => {
     if(!allBooking){
         return response.status(200).json({message: "No data found"});
     }
-
     return response.status(200).json({allBooking})
 })
