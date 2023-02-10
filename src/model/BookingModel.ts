@@ -1,3 +1,5 @@
+import { ScheduleModel } from "./ScheduleModel";
+
 export class BookingModel{
     constructor(){
         this.id = null;
@@ -6,6 +8,7 @@ export class BookingModel{
         this.scheduleId = null;
         this.dataInicial = null;
         this.dataFinal = null;
+        this.listSchedule = null;
         this.status = null;
         this.createdAt = null;
         this.deletedAt = null;
@@ -18,6 +21,7 @@ export class BookingModel{
     scheduleId: Array<number>;
     dataInicial: Date;
     dataFinal: Date;
+    listSchedule: [ScheduleModel];
     status: Enumerator;
     createdAt: Date;
     deletedAt: Date;
