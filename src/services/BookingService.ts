@@ -3,8 +3,6 @@ import { IBookingService } from "./IBookingService";
 import { BookingRepositorie } from "../repositories/BookingRepositorie";
 
 export class BookingService implements IBookingService {
-    constructor(){}
-
     public list(): any {
         let bookingRepositorie = new BookingRepositorie;
         let bookingArray = new Array;
@@ -34,4 +32,10 @@ export class BookingService implements IBookingService {
         }   
         return;
     }
+    
+    create(body: any) {
+        
+        return null;
+    }
+
 }
