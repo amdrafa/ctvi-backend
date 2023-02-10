@@ -7,10 +7,13 @@ export class BookingService implements IBookingService {
 
     public list(): any {
         let bookingRepositorie = new BookingRepositorie;
+        let bookingArray = new Array;
+        bookingArray.push(bookingRepositorie.getAllBookings());
         let jsonData = [];
 
-        if (bookingRepositorie.getAllBookings != null){
-            bookingRepositorie.getAllBookings.forEach(data => {
+        if (bookingArray != null){
+            bookingArray[0].forEach(data => {
+                console.log(data)
                 let bookingModel = new BookingModel();
                 bookingModel.id = data.id
                 bookingModel.bookingId = data.bookingId
