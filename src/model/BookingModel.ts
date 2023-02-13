@@ -18,7 +18,7 @@ export class BookingModel{
     id: number;
     bookingId: string;
     userId: number;
-    scheduleId: Array<number>;
+    scheduleId: Array<string>;
     dataInicial: Date;
     dataFinal: Date;
     listSchedule: [ScheduleModel];

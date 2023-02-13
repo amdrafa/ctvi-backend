@@ -1,13 +1,14 @@
 import { BookingModel } from "../model/BookingModel";
 import { IBookingService } from "./IBookingService";
-import { BookingRepositorie } from "../repositories/BookingRepositorie";
+import { BookingRepository } from "../repositories/BookingRepository";
 
 export class BookingService implements IBookingService {
     public list(): any {
-        let bookingRepositorie = new BookingRepositorie;
+        let bookingRepository = new BookingRepository;
         let bookingArray = new Array;
-        bookingArray.push(bookingRepositorie.getAllBookings());
+        bookingArray.push(bookingRepository.getAllBookings());
         let jsonData = [];
+        
 
         if (bookingArray != null){
             bookingArray[0].forEach(data => {
