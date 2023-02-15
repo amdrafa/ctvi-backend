@@ -4,4 +4,8 @@ export class UserRepository{
         return require("../test/mockup/user.json")
     }
 
+    public getLogin(): [] {
+        return require("../test/mockup/user.json")
+    }
+
 }

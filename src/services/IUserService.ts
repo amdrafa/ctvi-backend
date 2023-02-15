@@ -15,4 +15,6 @@ export interface IUserService{
 
     create({}:UserProps):void;
 
+    login(email: string, password: string): number;
+
 }

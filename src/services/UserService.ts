@@ -3,6 +3,7 @@ import { UserRepository } from "../repositories/UserRepository";
 import { IUserService, UserProps } from "./IUserService";
 
 export class UserService implements IUserService  {
+    
     list(): UserModel[] {
         
         const userRepository = new UserRepository();
@@ -11,6 +12,13 @@ export class UserService implements IUserService  {
     }
     create({ }: UserProps): void {
         throw new Error("Method not implemented.");
+    }
+
+    login(email: string, password: string): number {
+
+        
+
+        return 200
     }
 
 }

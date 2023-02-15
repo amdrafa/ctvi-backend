@@ -3,14 +3,20 @@ import { ScheduleRepository } from "../repositories/ScheduleRepository";
 import { IScheduleService } from "./IScheduleService";
 
 export class ScheduleService implements IScheduleService{
+
+    private scheduleRepository = new ScheduleRepository();
+    
     list(bookingId: string): string[] {
 
-        const scheduleRepository = new ScheduleRepository();
-        return scheduleRepository.getAllIdsSchedules(bookingId);
+        return this.scheduleRepository.getAllIdsSchedules(bookingId);
 
     }
-    listDetail(id:string[]): ScheduleModel[] {
-        throw new Error("Method not implemented.");
+    listDetail(id:string): ScheduleModel[] {
+        return this.scheduleRepository.getScheduleById(id);
+    }
+
+    listByBookigId(bookingId: string): ScheduleModel[] {
+        return this.scheduleRepository.getSchedulesByBookingId(bookingId);
     }
 
 }
