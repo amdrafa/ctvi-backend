@@ -6,4 +6,8 @@ export class BookingRepository{
         return require("../test/mockup/booking.json")
     }
 
+    public getById(id:string): any {
+        return require("../test/mockup/booking.json")
+    }
+
 }

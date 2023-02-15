@@ -1,0 +1,29 @@
+[
+    {
+        "id": 123,
+        "name": "Mercedes",
+        "cnpj": "230923000193",
+        "isActive": true,
+        "createdAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "deletedAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "updatedAt": "Fri Aug 26 2022 08:00:00 GMT-0300"
+    },
+    {
+        "id": 234,
+        "name": "Volks",
+        "cnpj": "243092300321",
+        "isActive": true,
+        "createdAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "deletedAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "updatedAt": "Fri Aug 26 2022 08:00:00 GMT-0300"
+    },
+    {
+        "id": 456,
+        "name": "Mercedes",
+        "cnpj": "12346420193",
+        "isActive": false,
+        "createdAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "deletedAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "updatedAt": "Fri Aug 26 2022 08:00:00 GMT-0300"
+    }
+]
