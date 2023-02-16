@@ -10,4 +10,8 @@ export class BookingRepository{
         return require("../test/mockup/booking.json")
     }
 
+    public createBooking(props: BookingModel): BookingModel {
+        return require("../test/mockup/booking.json")
+    }
+
 }

@@ -18,6 +18,7 @@ bookingRoutes.get("/list", (request, response) => {
 })
 
 bookingRoutes.get("/:id", (request, response) => {
+    
     const allBooking = bookingService.listDetail(request.params.id);
 
     if(!allBooking){
@@ -39,10 +40,16 @@ bookingRoutes.get("/:id/schedule", (request, response) => {
 })
 
 bookingRoutes.post("/create", (req, resp) => {
+
+    // Criar na pasta útil uma função que recebe como parâmetro
+    // o model e requisição.body, assim podendo validar em todas as rotas
+    // se o que foi enviado pela req é do tipo correto.
+
     const createBooking = bookingService.create(req.body);
+
     if(!createBooking){
         return resp.status(200).json({message: "No data found"});
     }
-    return resp.status(201).json(createBooking)
+    return resp.status(201).json(createBooking);
 })
 
