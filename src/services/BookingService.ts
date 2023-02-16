@@ -3,9 +3,12 @@ import { IBookingService } from "./IBookingService";
 import { BookingRepository } from "../repositories/BookingRepository";
 import { ScheduleService } from "./ScheduleService";
 import { StatusEnum } from "../enums/statusEnumerator";
+import { Request } from "express";
+import { Converter } from "../utils/Converter";
 
 export class BookingService implements IBookingService {
     
+    private converter = new Converter()
     
     private bookingRepository = new BookingRepository;
   
@@ -47,23 +50,42 @@ export class BookingService implements IBookingService {
         return booking;
     }
     
-    create({ userId, dataFinal, dataInicial, scheduleList }: BookingModel): BookingModel {
+    // create({ userId, dataFinal, dataInicial, scheduleList }: BookingModel): BookingModel {
         
-        const booking = {
-            userId,
-            dataFinal,
-            dataInicial,
-            scheduleList,
-            status: StatusEnum.PreApproved
-        }
+    //     const booking = {
+    //         userId,
+    //         dataFinal,
+    //         dataInicial,
+    //         scheduleList,
+    //         status: StatusEnum.PreApproved
+    //     };
 
-        try{
-            const bookingResponse = this.bookingRepository.createBooking(booking)
+    //     try{
+    //         const bookingResponse = this.bookingRepository.createBooking(booking)
+    //         return bookingResponse;
+    //     }catch(err){
+    //         throw new Error(err);
+    //     }
+
+    // }
+
+    create(request: Request): BookingModel {
+
+        
+        const bookingModel = new BookingModel();
+
+        try {
+            bookingModel.userId = request.body.userId
+            bookingModel.scheduleList = request.body.scheduleList;
+            bookingModel.dataInicial = this.converter.converterToDate(request.body.dataInicial)
+            bookingModel.dataFinal = request.body.dataFinal;
+
+            const bookingResponse = this.bookingRepository.createBooking(bookingModel);
+
             return bookingResponse;
-        }catch(err){
-            throw new Error(err);
+        } catch (error) {
+            throw new Error(error)
         }
-
     }
     
 }

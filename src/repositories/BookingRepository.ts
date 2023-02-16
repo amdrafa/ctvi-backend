@@ -11,7 +11,7 @@ export class BookingRepository{
     }
 
     public createBooking(props: BookingModel): BookingModel {
-        return require("../test/mockup/booking.json")
+        return props
     }
 
 }
