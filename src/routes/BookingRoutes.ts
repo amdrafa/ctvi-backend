@@ -19,7 +19,18 @@ bookingRoutes.get("/list", (request, response) => {
 
 bookingRoutes.get("/:id", (request, response) => {
     
-    const allBooking = bookingService.listDetail(request.params.id);
+    const allBooking = bookingService.listByIdDetail(Number(request.params.id));
+
+    if(!allBooking){
+        return response.status(200).json({message: "No data found"});
+    }
+
+    return response.status(200).json(allBooking)
+})
+
+bookingRoutes.get("/:id/bookingId", (request, response) => {
+    
+    const allBooking = bookingService.listByBookingIdDetail(request.params.id);
 
     if(!allBooking){
         return response.status(200).json({message: "No data found"});
@@ -47,5 +58,15 @@ bookingRoutes.post("/create", (req, resp) => {
         return resp.status(200).json({message: "No data found"});
     }
     return resp.status(201).json(createBooking);
+})
+
+bookingRoutes.delete("/delete/:id", (req, resp) =>{
+    const id = req.params.id
+    return bookingService.deleteById(Number(id))
+})
+
+bookingRoutes.delete("/delete/bookingId:id", (req, resp) =>{
+    const bookingId = req.params.id
+    return bookingService.deleteByBookingId(bookingId)
 })
 

@@ -1,8 +1,13 @@
+import { ScheduleModel } from './../model/ScheduleModel';
 
 
 export class ScheduleRepository{
 
-    public getAllIdsSchedules(bookingId:string): [] {
+    public getAllSchedules(): ScheduleModel[]{
+        return require("../test/mockup/bookingId.json")
+    }
+
+    public getAllSchedulesByBookingId(bookingId:string): ScheduleModel[]{
         return require("../test/mockup/bookingId.json")
     }
 
@@ -10,8 +15,6 @@ export class ScheduleRepository{
         return require("../test/mockup/bookingId.json")
     }
 
-    public getSchedulesByBookingId(bookingId:string): [] {
-        return require("../test/mockup/bookingId.json")
-    }
+    
 
 }

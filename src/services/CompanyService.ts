@@ -1,15 +1,35 @@
+import { Request } from 'express';
+import { CompanyRepository } from './../repositories/CompanyRepository';
 import { CompanyModel } from "../model/CompanyModel";
-import { CompanyRepository } from "../repositories/CompanyRepository";
 import { ICompanyService } from "./ICompanyService";
 
 export class CompanyService implements ICompanyService{
-    list(): CompanyModel[] {
-        
-        const companyRepository = new CompanyRepository();
 
-        const allCompanies:CompanyModel[] = companyRepository.getAllCompanies()
+    companyRepository = new CompanyRepository()
+
+    list(): CompanyModel[] {
+        const allCompanies:CompanyModel[] = this.companyRepository.getAllCompanies()
 
         return allCompanies;
     }
 
+    listDetail(id:number): CompanyModel{
+        return this.companyRepository.getCompanyByID(id)
+    }
+
+    create(): CompanyModel{
+        return
+    }
+
+    update(request: Request): CompanyModel{
+        const companyObj = new CompanyModel()
+        const {name, cnpj} = request.body
+        companyObj.name = name
+        companyObj.cnpj = cnpj
+        return this.companyRepository.updateCompany(companyObj) 
+    }
+
+    delete(id: number): boolean{
+        return this.companyRepository.deleteCompany(id)
+    }
 }

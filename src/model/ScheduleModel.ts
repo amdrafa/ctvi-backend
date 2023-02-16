@@ -12,16 +12,19 @@ export class ScheduleModel{
         this.createdAt = null;
         this.deletedAt = null;
         this.updatedAt = null;
+        this.isExclusive = null
     }
 
-    id: number;
-    scheduleId: Array<number>;
+    id?: number;
+    bookingId?: string;
+    scheduleId?: number;
     startDate: Date;
     finalDate: Date;
     listResource: [ResourceModel];
-    status: Enumerator;
-    createdAt: Date;
-    deletedAt: Date;
-    updatedAt: Date;
+    status?: Enumerator;
+    createdAt?: Date;
+    deletedAt?: Date;
+    updatedAt?: Date;
+    isExclusive: boolean;
 
 }

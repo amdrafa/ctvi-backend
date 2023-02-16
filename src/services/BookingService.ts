@@ -43,31 +43,19 @@ export class BookingService implements IBookingService {
         return;
     }
 
-    listDetail(bookingId: string): BookingModel {
+    listByBookingIdDetail(bookingId: string ): BookingModel {
 
-        const booking = this.bookingRepository.getById(bookingId)
+        const booking = this.bookingRepository.getByBookingId(bookingId)
 
         return booking;
     }
-    
-    // create({ userId, dataFinal, dataInicial, scheduleList }: BookingModel): BookingModel {
-        
-    //     const booking = {
-    //         userId,
-    //         dataFinal,
-    //         dataInicial,
-    //         scheduleList,
-    //         status: StatusEnum.PreApproved
-    //     };
 
-    //     try{
-    //         const bookingResponse = this.bookingRepository.createBooking(booking)
-    //         return bookingResponse;
-    //     }catch(err){
-    //         throw new Error(err);
-    //     }
+    listByIdDetail(id: number): BookingModel {
 
-    // }
+        const booking = this.bookingRepository.getById(id)
+
+        return booking;
+    }
 
     create(request: Request): BookingModel {
 
@@ -78,7 +66,7 @@ export class BookingService implements IBookingService {
             bookingModel.userId = request.body.userId
             bookingModel.scheduleList = request.body.scheduleList;
             bookingModel.dataInicial = this.converter.converterToDate(request.body.dataInicial)
-            bookingModel.dataFinal = request.body.dataFinal;
+            bookingModel.dataFinal = this.converter.converterToDate(request.body.dataFinal);
 
             const bookingResponse = this.bookingRepository.createBooking(bookingModel);
 
@@ -86,6 +74,16 @@ export class BookingService implements IBookingService {
         } catch (error) {
             throw new Error(error)
         }
+    }
+    
+    deleteById(id: number): boolean {
+        const response = this.bookingRepository.deleteById(id)
+        return response
+    }
+
+    deleteByBookingId(bookingId: string): boolean {
+        const response = this.bookingRepository.deleteByBookingId(bookingId)
+        return response
     }
     
 }

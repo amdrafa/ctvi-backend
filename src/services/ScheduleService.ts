@@ -3,20 +3,35 @@ import { ScheduleRepository } from "../repositories/ScheduleRepository";
 import { IScheduleService } from "./IScheduleService";
 
 export class ScheduleService implements IScheduleService{
+    
 
     private scheduleRepository = new ScheduleRepository();
     
-    list(bookingId: string): string[] {
+    listByBookingId(bookingId: string): ScheduleModel[] {
 
-        return this.scheduleRepository.getAllIdsSchedules(bookingId);
+        return this.scheduleRepository.getAllSchedulesByBookingId(bookingId);
 
     }
     listDetail(id:string): ScheduleModel[] {
         return this.scheduleRepository.getScheduleById(id);
     }
 
-    listByBookigId(bookingId: string): ScheduleModel[] {
-        return this.scheduleRepository.getSchedulesByBookingId(bookingId);
+    list(bookingId: string): ScheduleModel[] {
+        return this.scheduleRepository.getAllSchedules();
+    }
+
+    create(schedule: ScheduleModel): ScheduleModel {
+
+        const exclusiveSchedules = this.scheduleRepository.getAllSchedules()
+        .filter((slot) => {
+            slot.isExclusive;
+        });
+
+        
+
+
+        
+        return 
     }
 
 }

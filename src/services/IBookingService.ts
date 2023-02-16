@@ -5,6 +5,9 @@ import { Request } from 'express';
 
 export interface IBookingService{
     list():BookingModel[];
-    listDetail(bookingId: string):BookingModel;
+    listByBookingIdDetail(bookingId: string):BookingModel;
+    listByIdDetail(id:number):BookingModel
     create(request: Request):BookingModel;
+    deleteById(id: number): boolean;
+    deleteByBookingId(bookingId: string): boolean
 }

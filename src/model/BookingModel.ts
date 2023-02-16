@@ -24,6 +24,4 @@ export class BookingModel{
     createdAt?: Date;
     deletedAt?: Date;
     updatedAt?: Date;
-
-    
 }
