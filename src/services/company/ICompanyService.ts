@@ -1,5 +1,5 @@
 import { Request } from "express-jwt";
-import { CompanyModel } from "../model/CompanyModel";
+import { CompanyModel } from "../../model/CompanyModel";
 
 export interface ICompanyService {
     list():CompanyModel[];

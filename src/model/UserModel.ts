@@ -15,15 +15,15 @@ export class UserModel {
         this.updatedAt= null;
     };
 
-    id: number;
+    id?: number;
     name: string;
     email: string;
     password: string;
-    companyId: number;
+    companyId?: number;
     document: string;
     isForeigner: boolean;
-    roles: Enumerator<RolesEnum>;
-    createdAt: Date;
-    deletedAt: Date;
-    updatedAt: Date;
+    roles?: Enumerator<RolesEnum>;
+    createdAt?: Date;
+    deletedAt?: Date;
+    updatedAt?: Date;
 }

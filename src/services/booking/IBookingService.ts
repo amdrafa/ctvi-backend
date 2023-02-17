@@ -1,5 +1,5 @@
-import { BookingModel } from "../model/BookingModel";
-import { ScheduleModel } from "../model/ScheduleModel";
+import { BookingModel } from "../../model/BookingModel";
+import { ScheduleModel } from "../../model/ScheduleModel";
 import { Request } from 'express';
 
 

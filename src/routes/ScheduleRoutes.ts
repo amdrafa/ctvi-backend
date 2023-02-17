@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { BookingService } from '../services/BookingService';
+import { BookingService } from '../services/booking/BookingService';
 import { ScheduleService } from '../services/ScheduleService';
 
 export const scheduleRoutes = Router();

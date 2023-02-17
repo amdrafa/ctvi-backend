@@ -1,10 +1,10 @@
-import { BookingModel } from "../model/BookingModel";
+import { BookingModel } from "../../model/BookingModel";
 import { IBookingService } from "./IBookingService";
-import { BookingRepository } from "../repositories/BookingRepository";
-import { ScheduleService } from "./ScheduleService";
-import { StatusEnum } from "../enums/statusEnumerator";
+import { BookingRepository } from "../../repositories/BookingRepository";
+import { ScheduleService } from "../ScheduleService";
+import { StatusEnum } from "../../enums/statusEnumerator";
 import { Request } from "express";
-import { Converter } from "../utils/Converter";
+import { Converter } from "../../utils/Converter";
 
 export class BookingService implements IBookingService {
     

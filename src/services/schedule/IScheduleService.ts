@@ -1,4 +1,4 @@
-import { ScheduleModel } from "../model/ScheduleModel";
+import { ScheduleModel } from "../../model/ScheduleModel";
 
 export interface IScheduleService{
     list(bookingId: string):ScheduleModel[];

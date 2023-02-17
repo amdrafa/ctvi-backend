@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { CompanyService } from '../services/CompanyService';
+import { CompanyService } from '../services/company/CompanyService';
 
 export const companyRoutes = Router();
 

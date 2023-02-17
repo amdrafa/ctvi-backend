@@ -1,6 +1,6 @@
 import { Request } from 'express';
-import { CompanyRepository } from './../repositories/CompanyRepository';
-import { CompanyModel } from "../model/CompanyModel";
+import { CompanyRepository } from '../../repositories/CompanyRepository';
+import { CompanyModel } from "../../model/CompanyModel";
 import { ICompanyService } from "./ICompanyService";
 
 export class CompanyService implements ICompanyService{
