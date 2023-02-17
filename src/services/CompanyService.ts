@@ -17,8 +17,12 @@ export class CompanyService implements ICompanyService{
         return this.companyRepository.getCompanyByID(id)
     }
 
-    create(): CompanyModel{
-        return
+    create(request: Request): CompanyModel{
+        const companyObj = new CompanyModel()
+        const {name, cnpj} = request.body
+        companyObj.name = name
+        companyObj.cnpj = cnpj
+        return this.companyRepository.createCompany(companyObj)
     }
 
     update(request: Request): CompanyModel{

@@ -65,7 +65,7 @@ bookingRoutes.delete("/delete/:id", (req, resp) =>{
     return bookingService.deleteById(Number(id))
 })
 
-bookingRoutes.delete("/delete/bookingId:id", (req, resp) =>{
+bookingRoutes.delete("/delete/bookingId/:id", (req, resp) =>{
     const bookingId = req.params.id
     return bookingService.deleteByBookingId(bookingId)
 })
