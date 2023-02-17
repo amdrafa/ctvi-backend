@@ -2,6 +2,7 @@ import { Request } from "express";
 import { UserModel } from "../../model/UserModel";
 import { UserRepository } from "../../repositories/UserRepository";
 import { IUserService } from "./IUserService";
+import bcrypt from 'bcrypt';
 
 export class UserService implements IUserService  {
 
@@ -18,15 +19,33 @@ export class UserService implements IUserService  {
 
     create(request: Request): UserModel {
 
-        const user: UserModel = {
-            name: request.body.name,
-            password: request.body.password,
-            email: request.body.email,
-            document: request.body.document,
-            isForeigner: request.body.isForeigner
+        try {
+
+            const user: UserModel = {
+                name: request.body.name,
+                password: request.body.password,
+                email: request.body.email,
+                document: request.body.document,
+                isForeigner: request.body.isForeigner
+            }
+
+            bcrypt.hash(user.password, 10, function(err, hash){
+
+                if(err){
+                    throw new Error("Error when encrypting password");
+                }
+        
+                user.password = hash;
+           
+            })
+
+            return this.userRepository.createUser(user)
+            
+        } catch (error) {
+            return null;
         }
         
-        return this.userRepository.createUser(user)
+        
         
     }
 
@@ -52,9 +71,25 @@ export class UserService implements IUserService  {
         
     }
 
-    login(email: string, password: string): number {
+    login(email: string, password: string): UserModel {
     
-        return 200
+        const user = this.userRepository.getUserByEmailAndPassword(email, password);
+
+        if(!user){
+            return null
+        }
+
+        let isEncrypted = false 
+        
+        bcrypt.compare(password, user.password, function(err, result) {
+
+            isEncrypted = result;
+
+        });
+
+        // Missing middleware
+
+        return user;
     }
 
 }

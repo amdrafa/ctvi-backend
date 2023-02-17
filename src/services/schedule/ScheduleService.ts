@@ -1,5 +1,5 @@
-import { ScheduleModel } from "../model/ScheduleModel";
-import { ScheduleRepository } from "../repositories/ScheduleRepository";
+import { ScheduleModel } from "../../model/ScheduleModel";
+import { ScheduleRepository } from "../../repositories/ScheduleRepository";
 import { IScheduleService } from "./IScheduleService";
 
 export class ScheduleService implements IScheduleService{
@@ -22,15 +22,12 @@ export class ScheduleService implements IScheduleService{
 
     create(schedule: ScheduleModel): ScheduleModel {
 
-        const exclusiveSchedules = this.scheduleRepository.getAllSchedules()
-        .filter((slot) => {
-            slot.isExclusive;
-        });
+        // moa2jv
+        // Remember that if an user took 1 month of a resource,
+        // 30 lines will be recorded in the data base. One for each day. 
 
-        
+        // add logic to validate if there is an exclusive schedule 
 
-
-        
         return 
     }
 

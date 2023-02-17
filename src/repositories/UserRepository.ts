@@ -26,4 +26,8 @@ export class UserRepository{
         return require("../test/mockup/user.json")
     }
 
+    public getUserByEmailAndPassword(email: string, password: string): UserModel {
+        return require("../test/mockup/user.json")
+    }
+
 }

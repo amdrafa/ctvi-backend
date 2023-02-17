@@ -8,6 +8,6 @@ export interface IUserService{
     create(request: Request):UserModel;
     update(request: Request):UserModel;
     delete(id:number): boolean;
-    login(email: string, password: string): number;
+    login(email: string, password: string): UserModel;
 
 }

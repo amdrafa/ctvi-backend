@@ -26,6 +26,18 @@ userRoutes.get("/list/:id", (request, response) => {
     return response.status(200).json(user);
 })
 
+userRoutes.get("/login", (request, response) => {
+    const {email, password} = request.body;
+
+    const user = userService.login(email, password);
+
+    if(!user){
+        return response.json({message: "Invalid password"})
+    }
+
+    return user;
+})
+
 userRoutes.post("/create", (request, response) => {
     const user = userService.create(request);
 
@@ -46,7 +58,7 @@ userRoutes.post("/update", (request, response) => {
     return response.status(200).json(user);
 })
 
-userRoutes.put("/delete/:id", (request, response) => {
+userRoutes.delete("/delete/:id", (request, response) => {
 
     const userId = Number(request.params.id);
     const isUserDeleted = userService.delete(userId);
@@ -60,13 +72,5 @@ userRoutes.put("/delete/:id", (request, response) => {
 
 
 
-
-userRoutes.get("/login", (request, response) => {
-    const {email, password} = request.body;
-
-    const statusResponse = userService.login(email, password);
-
-    return response.status(statusResponse).send();
-})
 
 
