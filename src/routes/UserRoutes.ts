@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { BookingService } from '../services/booking/BookingService';
 import { UserService } from '../services/user/UserService';
+import jwt from 'jsonwebtoken';
 
 export const userRoutes = Router();
 
@@ -32,10 +32,12 @@ userRoutes.get("/login", (request, response) => {
     const user = userService.login(email, password);
 
     if(!user){
-        return response.json({message: "Invalid password"})
+        return response.status(401).json({message: "Invalid password"})
     }
 
-    return user;
+    const token = jwt.sign({ id: user?.id }, "ctvi-secret", { expiresIn: "8h" })
+
+    return response.status(200).json({user, token});
 })
 
 userRoutes.post("/create", (request, response) => {

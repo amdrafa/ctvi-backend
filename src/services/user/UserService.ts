@@ -21,13 +21,15 @@ export class UserService implements IUserService  {
 
         try {
 
-            const user: UserModel = {
-                name: request.body.name,
-                password: request.body.password,
-                email: request.body.email,
-                document: request.body.document,
-                isForeigner: request.body.isForeigner
-            }
+            const user = new UserModel();
+
+            
+                user.name = request.body.name;
+                user.password = request.body.password;
+                user.email = request.body.email;
+                user.document = request.body.document;
+                user.isForeigner = request.body.isForeigner;
+            
 
             bcrypt.hash(user.password, 10, function(err, hash){
 
@@ -51,15 +53,17 @@ export class UserService implements IUserService  {
 
     update(request: Request): UserModel {
 
-        const user: UserModel = {
-            id: request.body.id,
-            companyId: request.body.companyId,
-            name: request.body.name,
-            password: request.body.password,
-            email: request.body.email,
-            document: request.body.document,
-            isForeigner: request.body.isForeigner,
-        };
+        const user = new UserModel();
+
+        
+            user.id = request.body.id;
+            user.companyId = request.body.companyId;
+            user.name = request.body.name;
+            user.password = request.body.password;
+            user.email = request.body.email;
+            user.document = request.body.document;
+            user.isForeigner = request.body.isForeigner;
+        
         
         return this.userRepository.updateUser(user);
         
@@ -79,15 +83,17 @@ export class UserService implements IUserService  {
             return null
         }
 
-        let isEncrypted = false 
+        let approvedPasswordComparison = false 
         
         bcrypt.compare(password, user.password, function(err, result) {
 
-            isEncrypted = result;
+            approvedPasswordComparison = result;
 
         });
 
-        // Missing middleware
+        if(!approvedPasswordComparison){
+           return null
+        }
 
         return user;
     }

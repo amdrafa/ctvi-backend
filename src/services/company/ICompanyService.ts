@@ -1,4 +1,4 @@
-import { Request } from "express-jwt";
+import { Request } from "express";
 import { CompanyModel } from "../../model/CompanyModel";
 
 export interface ICompanyService {

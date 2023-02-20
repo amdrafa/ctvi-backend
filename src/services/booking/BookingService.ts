@@ -1,7 +1,7 @@
 import { BookingModel } from "../../model/BookingModel";
 import { IBookingService } from "./IBookingService";
 import { BookingRepository } from "../../repositories/BookingRepository";
-import { ScheduleService } from "../ScheduleService";
+import { ScheduleService } from "../schedule/ScheduleService";
 import { StatusEnum } from "../../enums/statusEnumerator";
 import { Request } from "express";
 import { Converter } from "../../utils/Converter";
