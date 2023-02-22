@@ -1,25 +1,29 @@
+import { Repository } from "typeorm"
+import { TypeORMDataSource } from "../config/DataSourceConnection"
 import { UserModel } from "../model/UserModel"
 
 export class UserRepository{
 
-    public getAllUsers(): [] {
-        return require("../test/mockup/user.json")
+    repository = TypeORMDataSource.getRepository(UserModel)
+
+    public async getAllUsers(): Promise<UserModel[]> {
+        return await this.repository.find()
     }
 
-    public getUserById(id: number): UserModel {
-        return require("../test/mockup/user.json")
+    public async getUserById(id: number): Promise<UserModel> {
+        return await this.repository.findOneBy({id: id})
     }
 
-    public getLogin(): [] {
-        return require("../test/mockup/user.json")
+    public async createUser(user: UserModel): Promise<UserModel> {
+        return await this.repository.save(user)
     }
 
-    public createUser(user: UserModel): UserModel {
-        return require("../test/mockup/user.json")
-    }
-
-    public updateUser(user: UserModel): UserModel {
-        return require("../test/mockup/user.json")
+    public async updateUser(user: UserModel): Promise<UserModel> {
+        const currentUser = this.repository.findBy({email: user.email})
+        if (currentUser){
+            throw new Error('Email already registered')
+        }
+        return await this.repository.save(currentUser, user)
     }
 
     public deleteUser(id: number) {

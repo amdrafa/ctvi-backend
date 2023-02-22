@@ -8,16 +8,16 @@ export class UserService implements IUserService  {
 
     private userRepository = new UserRepository();
     
-    list(): UserModel[] {
+    list(): Promise<UserModel[]> {
 
         return this.userRepository.getAllUsers();
     }
 
-    listById(id: number): UserModel {
+    listById(id: number): Promise<UserModel> {
         return this.userRepository.getUserById(id);
     }
 
-    create(request: Request): UserModel {
+    create(request: Request): Promise<UserModel> {
 
         try {
 
@@ -51,7 +51,7 @@ export class UserService implements IUserService  {
         
     }
 
-    update(request: Request): UserModel {
+    update(request: Request): Promise<UserModel> {
 
         const user = new UserModel();
 
@@ -75,7 +75,7 @@ export class UserService implements IUserService  {
         
     }
 
-    login(email: string, password: string): UserModel {
+    login(email: string, password: string): Promise<UserModel> {
     
         const user = this.userRepository.getUserByEmailAndPassword(email, password);
         if(!user){

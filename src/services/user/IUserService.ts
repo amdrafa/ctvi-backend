@@ -3,11 +3,11 @@ import { Request } from "express";
 
 export interface IUserService{
 
-    list():UserModel[];
-    listById(id: number):UserModel;
-    create(request: Request):UserModel;
-    update(request: Request):UserModel;
-    delete(id:number): boolean;
-    login(email: string, password: string): UserModel;
+    list():Promise<UserModel[]>;
+    listById(id: number):Promise<UserModel>;
+    create(request: Request):Promise<UserModel>;
+    update(request: Request):Promise<UserModel>;
+    delete(id:number): Promise<boolean>;
+    login(email: string, password: string): Promise<UserModel>;
 
 }
