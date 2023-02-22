@@ -32,7 +32,7 @@ userRoutes.get("/login", (request, response) => {
     const user = userService.login(email, password);
 
     if(!user){
-        return response.status(401).json({message: "Invalid password"})
+        return response.status(401).json({message: "Invalid e-mail or password"})
     }
 
     const token = jwt.sign({ id: user?.id }, "ctvi-secret", { expiresIn: "8h" })
