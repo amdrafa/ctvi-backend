@@ -2,7 +2,7 @@ import { Request } from "express";
 import { UserModel } from "../../model/UserModel";
 import { UserRepository } from "../../repositories/UserRepository";
 import { IUserService } from "./IUserService";
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt'
 
 export class UserService implements IUserService  {
 
@@ -78,23 +78,25 @@ export class UserService implements IUserService  {
     login(email: string, password: string): UserModel {
     
         const user = this.userRepository.getUserByEmailAndPassword(email, password);
-
         if(!user){
             return null
         }
 
         let approvedPasswordComparison = false 
         
-        bcrypt.compare(password, user.password, function(err, result) {
+        // bcrypt.compare(password, user.password, function(err, result) {
 
-            approvedPasswordComparison = result;
+        //     approvedPasswordComparison = result;
 
-        });
+        // });
 
-        if(!approvedPasswordComparison){
-           return null
+        if (password === user.password){
+            approvedPasswordComparison = true;
         }
-
+        // if(!approvedPasswordComparison){
+        //    return null
+        // }
+        user.password = ''
         return user;
     }
 

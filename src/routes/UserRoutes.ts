@@ -1,3 +1,4 @@
+import { ValidateToken } from './../middlewares/ValidateToken';
 import { Router } from 'express';
 import { UserService } from '../services/user/UserService';
 import jwt from 'jsonwebtoken';
@@ -5,6 +6,22 @@ import jwt from 'jsonwebtoken';
 export const userRoutes = Router();
 
 const userService = new UserService();
+
+userRoutes.post("/login", (request, response) => {
+    const {email, password} = request.body;
+
+    const user = userService.login(email, password);
+
+    if(!user){
+        return response.status(401).json({message: "Invalid email or password"})
+    }
+
+    const token = jwt.sign({ id: user?.id }, "ctvi-secret", { expiresIn: "8h" })
+
+    return response.status(200).json({user, token});
+})
+
+userRoutes.use(ValidateToken)
 
 userRoutes.get("/list", (request, response) => {
     const allUsers = userService.list();
@@ -24,20 +41,6 @@ userRoutes.get("/list/:id", (request, response) => {
     }
 
     return response.status(200).json(user);
-})
-
-userRoutes.get("/login", (request, response) => {
-    const {email, password} = request.body;
-
-    const user = userService.login(email, password);
-
-    if(!user){
-        return response.status(401).json({message: "Invalid e-mail or password"})
-    }
-
-    const token = jwt.sign({ id: user?.id }, "ctvi-secret", { expiresIn: "8h" })
-
-    return response.status(200).json({user, token});
 })
 
 userRoutes.post("/create", (request, response) => {
