@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { UserRepository } from "../repositories/UserRepository";
+import { UserService } from "../services/user/UserService";
 
 interface JwtPayload {
     id: number;
@@ -8,7 +8,7 @@ interface JwtPayload {
 
 export const ValidateToken = (req:Request, res: Response, next: NextFunction) => {
 
-    const userRepository = new UserRepository();
+    const userService = new UserService();
 
     const { authorization } = req.headers;
 
@@ -20,7 +20,7 @@ export const ValidateToken = (req:Request, res: Response, next: NextFunction) =>
 
     const { id } = jwt.verify(token, "ctvi-secret") as JwtPayload;
 
-    const user = userRepository.getUserById(id);
+    const user = userService.listById(id);
 
     if(!user){
         throw new Error("User not found. Id passed by token.")
