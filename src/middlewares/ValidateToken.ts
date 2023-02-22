@@ -1,3 +1,4 @@
+import { UserService } from './../services/user/UserService';
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { UserRepository } from "../repositories/UserRepository";
@@ -8,7 +9,7 @@ interface JwtPayload {
 
 export const ValidateToken = (req:Request, res: Response, next: NextFunction) => {
 
-    const userRepository = new UserRepository();
+    const userService = new UserService()
 
     const { authorization } = req.headers;
 
@@ -20,11 +21,10 @@ export const ValidateToken = (req:Request, res: Response, next: NextFunction) =>
 
     const { id } = jwt.verify(token, "ctvi-secret") as JwtPayload;
 
-    const user = userRepository.getUserById(id);
-
-    if(!user){
-        throw new Error("User not found. Id passed by token.")
-    }
+    const user = userService.listById(id);
+    
+    user.password=''
+    req.user = user
 
     next();
 }

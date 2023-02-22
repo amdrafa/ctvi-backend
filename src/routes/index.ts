@@ -1,3 +1,4 @@
+import { ValidateToken } from './../middlewares/ValidateToken';
 import { Router } from "express";
 import { bookingRoutes } from "./BookingRoutes";
 import { companyRoutes } from "./CompanyRoutes";
@@ -6,9 +7,11 @@ import { userRoutes } from "./UserRoutes";
 
 export const router = Router();
 
-router.use("/booking", bookingRoutes);
-
 router.use("/user", userRoutes);
+
+router.use(ValidateToken)
+
+router.use("/booking", bookingRoutes);
 
 router.use("/company", companyRoutes);
 
