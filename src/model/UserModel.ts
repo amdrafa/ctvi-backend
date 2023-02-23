@@ -15,7 +15,7 @@ export class UserModel {
     @Column()
     password: string;
 
-    @Column({ name: 'company_id' })
+    @Column({ name: 'company_id', nullable: true })
     companyId?: number;
 
     @Column()
@@ -24,8 +24,8 @@ export class UserModel {
     @Column({ name: 'is_foreigner' })
     isForeigner: boolean;
 
-    @Column()
-    roles?: Enumerator<RolesEnum>;
+    @Column({type: "text"})
+    roles: Enumerator<RolesEnum>;
 
     @CreateDateColumn({ name: 'created_at'})
     createdAt?: Date;

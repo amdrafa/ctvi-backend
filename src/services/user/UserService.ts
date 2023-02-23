@@ -17,7 +17,7 @@ export class UserService implements IUserService  {
         return this.userRepository.getUserById(id);
     }
 
-    create(request: Request): Promise<UserModel> {
+    async create(request: Request): Promise<UserModel> {
 
         try {
 
@@ -29,9 +29,10 @@ export class UserService implements IUserService  {
                 user.email = request.body.email;
                 user.document = request.body.document;
                 user.isForeigner = request.body.isForeigner;
+                user.roles = request.body.roles;
             
 
-            bcrypt.hash(user.password, 10, function(err, hash){
+            await bcrypt.hash(user.password, 10, function(err, hash){
 
                 if(err){
                     throw new Error("Error when encrypting password");
@@ -69,34 +70,34 @@ export class UserService implements IUserService  {
         
     }
 
-    delete(id:number): boolean {
+    async delete(id:number): Promise<boolean> {
 
-        return this.userRepository.deleteUser(id);
+        const updateResult = await this.userRepository.deleteUser(id);
         
+        return updateResult.affected > 0 ? true : false
     }
 
-    login(email: string, password: string): Promise<UserModel> {
+    async login(email: string, password: string): Promise<UserModel> {
+
+        const hashedPassword = await bcrypt.hash(password, 10)
     
-        const user = this.userRepository.getUserByEmailAndPassword(email, password);
+        const user = await this.userRepository.getUserByEmailAndPassword(email, hashedPassword);
         if(!user){
             return null
         }
 
         let approvedPasswordComparison = false 
         
-        // bcrypt.compare(password, user.password, function(err, result) {
+        bcrypt.compare(password, user.password, function(err, result) {
 
-        //     approvedPasswordComparison = result;
+            approvedPasswordComparison = result;
 
-        // });
+        });
 
-        if (password === user.password){
-            approvedPasswordComparison = true;
+        if(!approvedPasswordComparison){
+           return null
         }
-        // if(!approvedPasswordComparison){
-        //    return null
-        // }
-        user.password = ''
+        
         return user;
     }
 

@@ -1,11 +1,9 @@
 import express from 'express';
 import { router } from './routes';
-
-
 import "reflect-metadata"
-import { TypeOrmDataSource } from './config/DataSourceConnection';
+import { TypeORMDataSource } from './config/DataSourceConnection';
 
-TypeOrmDataSource.initialize()
+TypeORMDataSource.initialize()
     .then(() => {
         console.log("Database is running!")
     })

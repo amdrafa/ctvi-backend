@@ -19,20 +19,28 @@ export class UserRepository{
     }
 
     public async updateUser(user: UserModel): Promise<UserModel> {
-        const currentUser = this.repository.findBy({email: user.email})
+        const currentUser = await this.repository.findOneBy({email: user.email})
         if (currentUser){
             throw new Error('Email already registered')
         }
-        return await this.repository.save(currentUser, user)
+
+        const updatedUser = await this.repository.update({id: currentUser.id}, user)
+
+        if(!updatedUser){
+            throw new Error("Error when updating user")
+        }
+      
+        return this.getUserById(currentUser.id)
     }
 
-    public deleteUser(id: number) {
-        return require("../test/mockup/user.json")
+    public async deleteUser(id: number) {
+
+        return await this.repository.softDelete({id: id})
+    
     }
 
-    public getUserByEmailAndPassword(email: string, password: string): UserModel {
-        const user =  require("../test/mockup/user.json")
-        return user[0]
-    }
+    public async getUserByEmailAndPassword(email: string, password: string): Promise<UserModel> {
+        return await this.repository.findOneBy({email: email, password: password})
+    } 
 
 }
