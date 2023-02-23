@@ -31,17 +31,6 @@ export class UserService implements IUserService  {
                 user.isForeigner = request.body.isForeigner;
                 user.roles = request.body.roles;
             
-
-            await bcrypt.hash(user.password, 10, function(err, hash){
-
-                if(err){
-                    throw new Error("Error when encrypting password");
-                }
-        
-                user.password = hash;
-           
-            })
-
             return this.userRepository.createUser(user)
             
         } catch (error) {
@@ -79,20 +68,20 @@ export class UserService implements IUserService  {
 
     async login(email: string, password: string): Promise<UserModel> {
 
-        const hashedPassword = await bcrypt.hash(password, 10)
+        //const hashedPassword = await bcrypt.hash(password, 10)
     
-        const user = await this.userRepository.getUserByEmailAndPassword(email, hashedPassword);
+        const user = await this.userRepository.getUserByEmailAndPassword(email, password);
         if(!user){
             return null
         }
 
-        let approvedPasswordComparison = false 
+        let approvedPasswordComparison = true 
         
-        bcrypt.compare(password, user.password, function(err, result) {
+        // bcrypt.compare(password, user.password, function(err, result) {
 
-            approvedPasswordComparison = result;
+        //     approvedPasswordComparison = result;
 
-        });
+        // });
 
         if(!approvedPasswordComparison){
            return null
