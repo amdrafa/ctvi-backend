@@ -34,8 +34,8 @@ userRoutes.post("/login", async (request, response) => {
 
 userRoutes.use(ValidateToken)
 
-userRoutes.get("/list", (request, response) => {
-    const allUsers = userService.list();
+userRoutes.get("/list", async (request, response) => {
+    const allUsers = await userService.list();
 
     if(!allUsers){
         return response.status(200).json({message: "No data found"});
@@ -44,8 +44,8 @@ userRoutes.get("/list", (request, response) => {
     return response.status(200).json(allUsers)
 })
 
-userRoutes.get("/list/:id", (request, response) => {
-    const user = userService.listById(Number(request.params.id))
+userRoutes.get("/list/:id", async (request, response) => {
+    const user = await userService.listById(Number(request.params.id))
 
     if(!user){
         return response.status(200).json({message: "User not found"})
@@ -56,8 +56,8 @@ userRoutes.get("/list/:id", (request, response) => {
 
 
 // RETORNAR UM NOVO TOKEN COM USER ATUALIZADO
-userRoutes.post("/update", (request, response) => {
-    const user = userService.update(request);
+userRoutes.post("/update", async (request, response) => {
+    const user = await userService.update(request);
 
     if(!user){
         return response.status(200).json({message: "It was not possible to edit this user."});
@@ -66,10 +66,10 @@ userRoutes.post("/update", (request, response) => {
     return response.status(200).json(user);
 })
 
-userRoutes.delete("/delete/:id", (request, response) => {
+userRoutes.delete("/delete/:id", async (request, response) => {
 
     const userId = Number(request.params.id);
-    const isUserDeleted = userService.delete(userId);
+    const isUserDeleted = await userService.delete(userId);
 
     if(!isUserDeleted){
         return response.status(200).json({message: "It was not possible to delete this user."});

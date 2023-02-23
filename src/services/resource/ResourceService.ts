@@ -1,4 +1,5 @@
 import { Request } from "express";
+import { UpdateResult } from "typeorm";
 import { ResourceModel } from "../../model/ResourceModel";
 import { ResourceRepository } from "../../repositories/ResourceRepository";
 import { IResourceService } from "./IResourceService";
@@ -7,44 +8,24 @@ export class ResourceService implements IResourceService {
 
     private resourceRepository = new ResourceRepository();
 
-    list(): ResourceModel[] {
-
-        const allResources = this.resourceRepository.getAllResources();
-        
-        return allResources;
+    async list(): Promise<ResourceModel[]> {    
+        return await this.resourceRepository.getAllResources();
     }
 
-    listDetail(id:number): ResourceModel {
-
-        const resource = this.resourceRepository.getResourceById(id)
-        
-        return resource;
+    async listDetail(id:number): Promise<ResourceModel> {
+        return await this.resourceRepository.getResourceById(id);
     }
 
-    create(request: Request): ResourceModel {
-
-        const resource: ResourceModel = new ResourceModel();
-
-        resource.name = request.body.name,
-        resource.capacity = request.body.capacity,
-        resource.isActive = request.body.isActive
-        
-        return this.resourceRepository.createResource(resource);
+    async create(request: Request): Promise<ResourceModel> {
+        return this.resourceRepository.createResource(request.body);
     }
 
-    update(request: Request): ResourceModel {
-
-        const resource = new ResourceModel();
-
-        resource.name = request.body.name,
-        resource.capacity = request.body.capacity,
-        resource.isActive = request.body.isActive
-        
-        return this.resourceRepository.updateResource(resource);
+    async update(request: Request): Promise<UpdateResult> {
+        return await this.resourceRepository.updateResource(request.body)
     }
 
-    delete(id: number): boolean{
-        return this.resourceRepository.deleteResource(id)
+    async delete(id: number): Promise<UpdateResult>{
+        return await this.resourceRepository.deleteResource(id)
     }
 
 }

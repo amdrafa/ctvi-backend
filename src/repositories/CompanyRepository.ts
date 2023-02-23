@@ -1,25 +1,29 @@
+import { TypeORMDataSource } from './../config/DataSourceConnection';
+import { UpdateResult } from 'typeorm';
 import { CompanyModel } from './../model/CompanyModel';
 import { Request } from 'express';
 export class CompanyRepository{
 
-    public getAllCompanies(): [] {
-        return require("../test/mockup/company.json")
+    repository = TypeORMDataSource.getRepository(CompanyModel)
+
+    public async getAllCompanies(): Promise<CompanyModel[]> {
+        return await this.repository.find()
     }
 
-    public getCompanyByID(id: number){
-        return require("../test/mockup/company.json")
+    public async getCompanyByID(id: number): Promise<CompanyModel>{
+        return await this.repository.findOneBy({id:id})
     }
 
-    public createCompany(company: CompanyModel){
-        return require("../test/mockup/company.json")
+    public async createCompany(company: CompanyModel): Promise<CompanyModel>{
+        return this.repository.save(this.repository.create(company))
     }
 
-    public updateCompany(company: CompanyModel){
-        return require("../test/mockup/company.json")
+    public async updateCompany(company: CompanyModel): Promise<UpdateResult>{
+        return await this.repository.update({id: company.id}, {...company})
     }
 
-    public deleteCompany(id:number){
-        return require("../test/mockup/company.json")
+    public async deleteCompany(id:number): Promise<UpdateResult>{
+        return await this.repository.softDelete({id:id})
     }
 
 }

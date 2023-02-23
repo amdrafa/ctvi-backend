@@ -1,3 +1,5 @@
+import { ResourceModel } from './../model/ResourceModel';
+import { CompanyModel } from './../model/CompanyModel';
 import "reflect-metadata"
 import { DataSource } from "typeorm"
 import { UserModel } from "../model/UserModel"
@@ -10,6 +12,6 @@ export const TypeORMDataSource = new DataSource({
     password: "123456",
     database: "ctvi",
     synchronize: true,
-    entities: [UserModel],
+    entities: [UserModel, CompanyModel, ResourceModel],
     logging: false,
 })

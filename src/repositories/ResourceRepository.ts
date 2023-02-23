@@ -1,24 +1,28 @@
+import { UpdateResult } from "typeorm";
+import { TypeORMDataSource } from "../config/DataSourceConnection";
 import { ResourceModel } from "../model/ResourceModel";
 
 export class ResourceRepository{
 
-    public getAllResources(): ResourceModel[] {
-        return require("../test/mockup/resource.json")
+    repository = TypeORMDataSource.getRepository(ResourceModel)
+
+    public async getAllResources(): Promise<ResourceModel[]> {
+        return await this.repository.find()
     }
 
-    public getResourceById(id:number): ResourceModel {
-        return require("../test/mockup/resource.json")
+    public async getResourceById(id:number): Promise<ResourceModel> {
+        return await this.repository.findOneBy({id: id})
     }
 
-    public createResource(resource: ResourceModel): ResourceModel {
-        return require("../test/mockup/resource.json")
+    public async createResource(resource: ResourceModel): Promise<ResourceModel> {
+        return  await this.repository.save(resource)
     }
 
-    public updateResource(resource: ResourceModel): ResourceModel {
-        return require("../test/mockup/resource.json")
+    public async updateResource(resource: ResourceModel): Promise<UpdateResult> {
+        return await this.repository.update({id: resource.id}, {...resource})
     }
 
-    public deleteResource(id: number): boolean {
-        return require("../test/mockup/resource.json")
+    public async deleteResource(id: number): Promise<UpdateResult> {
+        return await this.repository.softDelete({id: id})
     }
 }

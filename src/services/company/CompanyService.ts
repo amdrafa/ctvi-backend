@@ -1,3 +1,4 @@
+import { UpdateResult } from 'typeorm';
 import { Request } from 'express';
 import { CompanyRepository } from '../../repositories/CompanyRepository';
 import { CompanyModel } from "../../model/CompanyModel";
@@ -7,33 +8,23 @@ export class CompanyService implements ICompanyService{
 
     companyRepository = new CompanyRepository()
 
-    list(): CompanyModel[] {
-        const allCompanies:CompanyModel[] = this.companyRepository.getAllCompanies()
-
-        return allCompanies;
+    async list(): Promise<CompanyModel[]> {
+        return await this.companyRepository.getAllCompanies()
     }
 
-    listDetail(id:number): CompanyModel{
-        return this.companyRepository.getCompanyByID(id)
+    async listDetail(id:number): Promise<CompanyModel>{
+        return await this.companyRepository.getCompanyByID(id)
     }
 
-    create(request: Request): CompanyModel{
-        const companyObj = new CompanyModel()
-        const {name, cnpj} = request.body
-        companyObj.name = name
-        companyObj.cnpj = cnpj
-        return this.companyRepository.createCompany(companyObj)
+    async create(request: Request): Promise<CompanyModel>{
+        return await this.companyRepository.createCompany(request.body)
     }
 
-    update(request: Request): CompanyModel{
-        const companyObj = new CompanyModel()
-        const {name, cnpj} = request.body
-        companyObj.name = name
-        companyObj.cnpj = cnpj
-        return this.companyRepository.updateCompany(companyObj) 
+    async update(request: Request): Promise<UpdateResult>{
+        return await this.companyRepository.updateCompany(request.body) 
     }
 
-    delete(id: number): boolean{
-        return this.companyRepository.deleteCompany(id)
+    async delete(id: number): Promise<UpdateResult>{
+        return await this.companyRepository.deleteCompany(id)
     }
 }

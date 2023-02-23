@@ -8,9 +8,9 @@ export class UserService implements IUserService  {
 
     private userRepository = new UserRepository();
     
-    list(): Promise<UserModel[]> {
+    async list(): Promise<UserModel[]> {
 
-        return this.userRepository.getAllUsers();
+        return await this.userRepository.getAllUsers();
     }
 
     listById(id: number): Promise<UserModel> {

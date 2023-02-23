@@ -6,8 +6,8 @@ export const resourceRoutes = Router();
 
 const resourceService = new ResourceService();
 
-resourceRoutes.get("/list", (request, response) => {
-    const allResources = resourceService.list();
+resourceRoutes.get("/list", async (request, response) => {
+    const allResources = await resourceService.list();
     
     if(!allResources){
         return response.status(200).json({message: "No data found"});
@@ -16,8 +16,8 @@ resourceRoutes.get("/list", (request, response) => {
     return response.status(200).json(allResources)
 })
 
-resourceRoutes.get("/list/:id", (request, response) => {
-    const resource = resourceService.listDetail(Number(request.params.id))
+resourceRoutes.get("/list/:id", async (request, response) => {
+    const resource = await resourceService.listDetail(Number(request.params.id))
     
     if(!resource){
         return response.status(200).json({message: "No data found"});
@@ -26,9 +26,9 @@ resourceRoutes.get("/list/:id", (request, response) => {
     return response.status(200).json(resource)
 })
 
-resourceRoutes.post("/create", (request, response) => {
+resourceRoutes.post("/create", async (request, response) => {
    
-    const resource = resourceService.create(request);
+    const resource = await resourceService.create(request);
 
     if(!resource){
         return response.status(200).json({message: "Resource couldn't be created"});
@@ -37,9 +37,9 @@ resourceRoutes.post("/create", (request, response) => {
     return response.status(201).json(resource);
 })
 
-resourceRoutes.put("/update", (request, response) => {
+resourceRoutes.put("/update", async (request, response) => {
    
-    const resource = resourceService.update(request);
+    const resource = await resourceService.update(request);
 
     if(!resource){
         return response.status(200).json({message: "Resource couldn't be updated"});
@@ -48,14 +48,14 @@ resourceRoutes.put("/update", (request, response) => {
     return response.status(201).json(resource);
 })
 
-resourceRoutes.delete("/delete/:id", (request, response) => {
+resourceRoutes.delete("/delete/:id", async (request, response) => {
    
-    const result = resourceService.delete(Number(request.params.id))
+    const result = await resourceService.delete(Number(request.params.id))
 
     if(!result){
         return response.status(200).json({message: "It was not able to delete this resource"})
     }
-    return response.status(204).json({message: "Resource deleted"})
+    return response.status(202).json(result)
 })
 
 

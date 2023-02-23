@@ -1,10 +1,11 @@
 import { Request } from "express";
+import { UpdateResult } from "typeorm";
 import { ResourceModel } from "../../model/ResourceModel";
 
 export interface IResourceService {
-    list():ResourceModel[];
-    listDetail(id:number):ResourceModel;
-    create(request: Request): ResourceModel;
-    update(request: Request): ResourceModel;
-    delete(id: number): boolean;
+    list():Promise<ResourceModel[]>;
+    listDetail(id:number):Promise<ResourceModel>;
+    create(request: Request): Promise<ResourceModel>;
+    update(request: Request): Promise<UpdateResult>;
+    delete(id: number): Promise<UpdateResult>;
 }
