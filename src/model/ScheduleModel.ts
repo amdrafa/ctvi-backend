@@ -1,22 +1,15 @@
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { ResourceModel } from "./ResourceModel";
 
+@Entity()
 export class ScheduleModel{
-    
-    constructor(){
-        this.id = null;
-        this.scheduleId = null;
-        this.startDate = null;
-        this.finalDate = null;
-        this.listResource = null;
-        this.status = null;
-        this.createdAt = null;
-        this.deletedAt = null;
-        this.updatedAt = null;
-        this.isExclusive = null
-    }
 
-    id?: number;
-    bookingId?: string;
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    // muitos schedules para um booking
+    // id do booking será 
+    @Column()
     scheduleId?: number;
     startDate: Date;
     finalDate: Date;

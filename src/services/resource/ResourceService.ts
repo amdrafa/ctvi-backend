@@ -7,9 +7,9 @@ export class ResourceService implements IResourceService {
 
     private resourceRepository = new ResourceRepository();
 
-    list(): ResourceModel[] {
+    async list(): Promise<ResourceModel[]> {
 
-        const allResources = this.resourceRepository.getAllResources();
+        const allResources = await this.resourceRepository.getAllResources();
         
         return allResources;
     }

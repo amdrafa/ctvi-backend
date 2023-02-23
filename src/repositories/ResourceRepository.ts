@@ -1,9 +1,12 @@
+import { TypeORMDataSource } from "../config/DataSourceConnection";
 import { ResourceModel } from "../model/ResourceModel";
 
 export class ResourceRepository{
 
-    public getAllResources(): ResourceModel[] {
-        return require("../test/mockup/resource.json")
+    repository = TypeORMDataSource.getRepository(ResourceModel)
+
+    public async getAllResources(): Promise<ResourceModel[]> {
+        return await this.repository.find()
     }
 
     public getResourceById(id:number): ResourceModel {

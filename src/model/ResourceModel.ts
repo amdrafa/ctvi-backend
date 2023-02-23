@@ -1,25 +1,34 @@
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { ResourceType } from "../enums/ResourceType";
 import { StatusEnum } from "../enums/statusEnumerator";
 import { ScheduleModel } from "./ScheduleModel";
 
-export class ResourceModel{
-    constructor(){
-        this.id = null;
-        this.name = null;
-        this.type = null;
-        this.capacity = null;
-        this.isActive = null;
-        this.createdAt = null;
-        this.deletedAt = null;
-        this.updatedAt = null;
-    }
 
+@Entity()
+export class ResourceModel{
+
+    @PrimaryGeneratedColumn()
     id?: number;
+
+    @Column()
     name: string;
+    
+    @Column()
     type?: ResourceType;
+
+    @Column()
     capacity: number;
+
+    @Column({name: "is_active"})
     isActive?: boolean;
+
+    
+    @CreateDateColumn({ name: 'created_at'})
     createdAt?: Date;
+
+    @DeleteDateColumn({ name: 'deleted_at' })
     deletedAt?: Date;
+
+    @UpdateDateColumn({ name: 'updated_at' })
     updatedAt?: Date;
 }
