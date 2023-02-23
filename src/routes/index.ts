@@ -12,10 +12,12 @@ router.use("/user", userRoutes);
 
 router.use(ValidateToken);
 
+router.use("schedule", scheduleRoutes)
+
 router.use("/resource", resourceRoutes);
 
 router.use("/booking", bookingRoutes);
 
 router.use("/company", companyRoutes);
 
-router.use("/schedule", scheduleRoutes);
+
