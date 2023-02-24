@@ -19,12 +19,7 @@ export class ScheduleRepository{
     }
 
     public async verifyIfScheduleExistsByDateByInicialDate(startDate: Date, finalDate: Date): Promise<boolean>{
-        const schedule = await this.repository.createQueryBuilder("schedule")
-        .from(ScheduleModel, "schedule")
-        .where("schedule.startDate = :startDate", {startDate:startDate})
-        .andWhere("schedule.finalDate = :finalDate", {finalDate:finalDate})
-        .andWhere("schedule.is_exclusive = true").getOne()
-
+        const schedule = this.repository.findOneBy({startDate:startDate, finalDate: finalDate, isExclusive: true})
         return schedule ? false : true;
     }
     

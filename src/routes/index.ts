@@ -12,7 +12,7 @@ router.use("/user", userRoutes);
 
 router.use(ValidateToken);
 
-router.use("schedule", scheduleRoutes)
+router.use("/schedule", scheduleRoutes)
 
 router.use("/resource", resourceRoutes);
 

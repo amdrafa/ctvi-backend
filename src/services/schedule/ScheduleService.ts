@@ -36,7 +36,7 @@ export class ScheduleService implements IScheduleService{
                 schedule.status = StatusEnum.PreApproved
                 newSchedule = await this.scheduleRepository.create(schedule)
             }else{
-                schedule.
+                schedule.status = StatusEnum.NotAvailable
             }
             createdSchedules.push(newSchedule);
             
@@ -46,14 +46,13 @@ export class ScheduleService implements IScheduleService{
     }
 
     splitArrayInDays(scheduleModel: ScheduleModel[]){
-
-        let schedulesPorDia: ScheduleModel[];
+        let arrayFinal : ScheduleModel[] = [];
         scheduleModel.forEach(schedule => {
             let dataInicial = moment(schedule.startDate);
             let dataFinal = moment(schedule.finalDate);
-            let diasTotais = dataInicial.diff(dataFinal, 'days');
-
-            for (let i = 0; i < diasTotais; i++) {
+            let diasTotais = dataFinal.diff(dataInicial, 'days');
+            let schedulesPorDia: ScheduleModel[] = [];
+            for (let i = 0; i <= diasTotais; i++) {
                 if(i==0){
                     schedule.finalDate = dataInicial.hour(18).toDate()
                 }else{
@@ -61,11 +60,14 @@ export class ScheduleService implements IScheduleService{
                     schedule.startDate = moment(dataDoDia).hour(8).toDate()
                     schedule.finalDate = moment(dataDoDia).hour(18).toDate()
                 }
+
                 schedulesPorDia.push(schedule)
             }
-           
+            schedulesPorDia.forEach(schedule =>{
+                arrayFinal.push(schedule)
+            })
         });
-        return schedulesPorDia
+        return arrayFinal
     }
 
 }

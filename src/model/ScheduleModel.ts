@@ -9,8 +9,8 @@ export class ScheduleModel{
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    scheduleId: number;
+    @Column({nullable: true, default: null})
+    scheduleId?: number;
 
     @Column({type: "timestamp with time zone"})
     startDate: Date;
@@ -35,8 +35,5 @@ export class ScheduleModel{
     
     @ManyToOne(() => BookingModel, (booking) => booking.schedules)
     booking: BookingModel;
-
-    @ManyToOne(() => ResourceModel, (resource) => resource.schedule)
-    resource: ResourceModel;
 
 }
