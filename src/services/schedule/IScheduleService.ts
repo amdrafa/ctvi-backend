@@ -1,11 +1,13 @@
+import { Request } from "express";
 import { ScheduleModel } from "../../model/ScheduleModel";
 
 export interface IScheduleService{
-    list(bookingId: string):ScheduleModel[];
 
-    listDetail(id:string):ScheduleModel[];
+    create(request: Request): Promise<ScheduleModel[]>;
 
-    listByBookingId(bookingId:string):ScheduleModel[];
+    listDetail(id:number):Promise<ScheduleModel>;
 
-    create(schedule: ScheduleModel): ScheduleModel;
+    listByBookingId(bookingId:number):Promise<ScheduleModel[]>;
+
+    
 }

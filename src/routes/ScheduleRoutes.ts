@@ -7,24 +7,25 @@ export const scheduleRoutes = Router();
 
 const scheduleService = new ScheduleService();
 
-scheduleRoutes.get("/list", (request, response) => {
-    const allSchedules = scheduleService.list('123')
+scheduleRoutes.post("/create", (request, response) => {
+    const schedules = scheduleService.create(request)
     
-    if(!allSchedules){
+    if(!schedules){
         return response.status(200).json({message: "No data found"});
     }
 
-    return response.status(200).json(allSchedules)
+    return response.status(200).json(schedules)
 })
 
-scheduleRoutes.get("/list/", (request, response) => {
-    const allSchedules = scheduleService.list('123')
+scheduleRoutes.get("/list/:id", (request, response) => {
+    const schedule = scheduleService.listDetail(Number(request.params.id))
     
-    if(!allSchedules){
+    if(!schedule){
         return response.status(200).json({message: "No data found"});
     }
 
-    return response.status(200).json(allSchedules)
+    return response.status(200).json(schedule)
 })
+
 
 

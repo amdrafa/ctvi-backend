@@ -1,5 +1,6 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { ResourceType } from "../enums/ResourceType";
+import { ScheduleModel } from "./ScheduleModel";
 
 @Entity()
 export class ResourceModel{
@@ -30,4 +31,7 @@ export class ResourceModel{
 
     @UpdateDateColumn({name: 'update_at'})
     updatedAt: Date;
+
+    @OneToMany(() => ScheduleModel, (schedule) => schedule.resource)
+    schedule: ScheduleModel;
 }

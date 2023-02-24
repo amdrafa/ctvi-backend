@@ -1,3 +1,5 @@
+import { Request } from "express";
+import { StatusEnum } from "../../enums/statusEnumerator";
 import { ScheduleModel } from "../../model/ScheduleModel";
 import { ScheduleRepository } from "../../repositories/ScheduleRepository";
 import { IScheduleService } from "./IScheduleService";
@@ -6,29 +8,40 @@ export class ScheduleService implements IScheduleService{
     
 
     private scheduleRepository = new ScheduleRepository();
+
+    async listDetail(id:number): Promise<ScheduleModel> {
+        return await this.scheduleRepository.getScheduleById(id);
+    }
     
-    listByBookingId(bookingId: string): ScheduleModel[] {
+    async listByBookingId(bookingId: number): Promise<ScheduleModel[]> {
 
-        return this.scheduleRepository.getAllSchedulesByBookingId(bookingId);
+        return await this.scheduleRepository.getAllSchedulesByBookingId(bookingId);
 
     }
-    listDetail(id:string): ScheduleModel[] {
-        return this.scheduleRepository.getScheduleById(id);
-    }
 
-    list(bookingId: string): ScheduleModel[] {
-        return this.scheduleRepository.getAllSchedules();
-    }
+    async create(request: Request): Promise<ScheduleModel[]> {
 
-    create(schedule: ScheduleModel): ScheduleModel {
+        const schedules: ScheduleModel[] = request.body;
 
-        // moa2jv
-        // Remember that if an user took 1 month of a resource,
-        // 30 lines will be recorded in the data base. One for each day. 
+        const createdSchedules: ScheduleModel[] = []
 
-        // add logic to validate if there is an exclusive schedule 
+        let newSchedule = null;
 
-        return 
+        schedules.forEach(async (schedule) => {
+
+            const IsScheduleAvaiable = this.scheduleRepository.verifyIfScheduleExistsByDateByInicialDate(schedule.startDate, schedule.finalDate)
+
+            if(IsScheduleAvaiable){
+                schedule.status = StatusEnum.PreApproved
+                newSchedule = await this.scheduleRepository.create(schedule)
+            }else{
+                schedule.
+            }
+            createdSchedules.push(newSchedule);
+            
+        })
+
+        return createdSchedules
     }
 
 }

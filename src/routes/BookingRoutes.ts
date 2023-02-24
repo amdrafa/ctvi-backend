@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { UpdateResult } from 'typeorm';
 import { ScheduleRepository } from '../repositories/ScheduleRepository';
 import { BookingService } from '../services/booking/BookingService';
 import { ScheduleService } from '../services/schedule/ScheduleService';
@@ -7,8 +8,8 @@ export const bookingRoutes = Router();
 
 const bookingService = new BookingService();
 
-bookingRoutes.get("/list", (request, response) => {
-    const allBooking = bookingService.list();
+bookingRoutes.get("/list", async (request, response) => {
+    const allBooking = await bookingService.list();
 
     if(!allBooking){
         return response.status(200).json({message: "No data found"});
@@ -17,9 +18,9 @@ bookingRoutes.get("/list", (request, response) => {
     return response.status(200).json(allBooking)
 })
 
-bookingRoutes.get("/:id", (request, response) => {
+bookingRoutes.get("/list/:id", async (request, response) => {
     
-    const allBooking = bookingService.listByIdDetail(Number(request.params.id));
+    const allBooking = await bookingService.listByIdDetail(Number(request.params.id));
 
     if(!allBooking){
         return response.status(200).json({message: "No data found"});
@@ -28,20 +29,9 @@ bookingRoutes.get("/:id", (request, response) => {
     return response.status(200).json(allBooking)
 })
 
-bookingRoutes.get("/:id/bookingId", (request, response) => {
+bookingRoutes.get("/:id/schedule", async (request, response) => {
     
-    const allBooking = bookingService.listByBookingIdDetail(request.params.id);
-
-    if(!allBooking){
-        return response.status(200).json({message: "No data found"});
-    }
-
-    return response.status(200).json(allBooking)
-})
-
-bookingRoutes.get("/:id/schedule", (request, response) => {
-    
-    const allSchedules = new ScheduleService()
+    const allSchedules = await new ScheduleService()
 
     if(!allSchedules){
         return response.status(200).json({message: "No data found"});
@@ -50,9 +40,9 @@ bookingRoutes.get("/:id/schedule", (request, response) => {
     return response.status(200).json(allSchedules)
 })
 
-bookingRoutes.post("/create", (req, resp) => {
+bookingRoutes.post("/create", async (req, resp) => {
 
-    const createBooking = bookingService.create(req);
+    const createBooking = await bookingService.create(req);
 
     if(!createBooking){
         return resp.status(200).json({message: "No data found"});
@@ -60,13 +50,18 @@ bookingRoutes.post("/create", (req, resp) => {
     return resp.status(201).json(createBooking);
 })
 
-bookingRoutes.delete("/delete/:id", (req, resp) =>{
+bookingRoutes.delete("/delete/:id", async (req, resp) =>{
     const id = req.params.id
-    return bookingService.deleteById(Number(id))
+
+    const wasUserDeleted:UpdateResult = await bookingService.deleteById(Number(id))
+
+    return resp.json({message: wasUserDeleted.affected > 0 ? "User deleted." : "Error when deleting user."})
 })
 
-bookingRoutes.delete("/delete/bookingId/:id", (req, resp) =>{
+bookingRoutes.delete("/delete/bookingId/:id", async (req, resp) =>{
     const bookingId = req.params.id
-    return bookingService.deleteByBookingId(bookingId)
+    const wasUserDeleted:UpdateResult = await bookingService.deleteByBookingId(bookingId)
+
+    return resp.json({message: wasUserDeleted.affected > 0 ? "User deleted." : "Error when deleting user."})
 })
 

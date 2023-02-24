@@ -1,27 +1,37 @@
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { StatusEnum } from "../enums/statusEnumerator";
 import { ScheduleModel } from "./ScheduleModel";
 
+@Entity()
 export class BookingModel{
-    constructor(){
-        this.id = null;
-        this.bookingId = null;
-        this.userId = null;
-        this.dataInicial = null;
-        this.dataFinal = null;
-        this.status = null;
-        this.createdAt = null;
-        this.deletedAt = null;
-        this.updatedAt = null;
-    }
 
+    @PrimaryGeneratedColumn()
     id?: number;
-    bookingId?: string;
+
+    @Column()
+    bookingId: string;
+
+    @Column()
     userId: number;
+
+    @Column({type: "timestamp"})
     dataInicial: Date;
+
+    @Column({type: "timestamp"})
     dataFinal: Date;
-    scheduleList: [ScheduleModel];
-    status?: StatusEnum;
-    createdAt?: Date;
-    deletedAt?: Date;
-    updatedAt?: Date;
+
+    @Column({type: "enum", enum: StatusEnum})
+    status: StatusEnum;
+
+    @CreateDateColumn({ name: 'created_at'})
+    createdAt: Date;
+
+    @DeleteDateColumn({ name: 'deleted_at' })
+    deletedAt: Date;
+
+    @UpdateDateColumn({ name: 'updated_at' })
+    updatedAt: Date;
+
+    @OneToMany(() => ScheduleModel, (schedule) => schedule.booking)
+    schedules: ScheduleModel[];
 }

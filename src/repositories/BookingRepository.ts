@@ -1,33 +1,37 @@
+import { UpdateResult } from "typeorm";
+import { TypeORMDataSource } from "../config/DataSourceConnection";
 import { BookingModel } from "../model/BookingModel";
 
 export class BookingRepository{
 
-    public getAllBookings(): [] {
-        return require("../test/mockup/booking.json")
+    repository = TypeORMDataSource.getRepository(BookingModel);
+
+    public async getAllBookings(): Promise<BookingModel[]> {
+        return await this.repository.find();
     }
 
-    public getById(id:number): any {
-        return require("../test/mockup/booking.json")
+    public async getById(id:number): Promise<BookingModel> {
+        return await this.repository.findOneBy({id: id})
     }
 
-    public getByBookingId(bookingId:string): any {
-        return require("../test/mockup/booking.json")
+    public async getByBookingId(bookingId:string): Promise<BookingModel> {
+        return await this.repository.findOneBy({bookingId: bookingId})
     }
 
-    public createBooking(props: BookingModel): BookingModel {
-        return props
+    public async createBooking(booking: BookingModel): Promise<BookingModel> {
+        return await this.repository.save(booking);
     }
 
-    public deleteByBookingId(bookingId: string): boolean{
-        return true
+    public async deleteByBookingId(bookingId: string): Promise<UpdateResult>{
+        return await this.repository.softDelete({bookingId: bookingId})
     }
 
-    public deleteById(id: number): boolean{
-        return true
-    }
+    public async deleteById(id: number): Promise<UpdateResult>{
+        return await this.repository.softDelete({id: id})
+    }   
 
-    public updateBooking(id: number): BookingModel{
-        return
+    public async updateBooking(booking: BookingModel): Promise<UpdateResult>{
+        return await this.repository.update({id: booking.id}, {...booking})
     }
 
 }

@@ -5,6 +5,7 @@ import { ScheduleService } from "../schedule/ScheduleService";
 import { StatusEnum } from "../../enums/statusEnumerator";
 import { Request } from "express";
 import { Converter } from "../../utils/Converter";
+import { UpdateResult } from "typeorm";
 
 export class BookingService implements IBookingService {
     
@@ -12,78 +13,40 @@ export class BookingService implements IBookingService {
     
     private bookingRepository = new BookingRepository;
   
-    public list(): any {
+    async list(): Promise<BookingModel[]> {
         
-        let scheduleService = new ScheduleService;
-        let bookingArray = new Array;
-        bookingArray.push(this.bookingRepository.getAllBookings());
-        let jsonData = [];
-        
+        return await this.bookingRepository.getAllBookings();
 
-        if (bookingArray != null){
-            bookingArray[0].forEach(data => {
-                console.log(data)
-                let bookingModel = new BookingModel();
-                bookingModel.id = data.id
-                bookingModel.bookingId = data.bookingId
-                bookingModel.userId = data.userId
-                bookingModel.dataInicial = data.dataInicial
-                bookingModel.dataFinal = data.dataFinal
-                bookingModel.status = data.status
-                bookingModel.createdAt = data.createdAt 
-                bookingModel.deletedAt = data.deletedAt
-                bookingModel.updatedAt = data.updatedAt
-
-                jsonData.push({
-                    bookingModel
-                })          
-            })
-            return jsonData
-        }   
-        return;
     }
 
-    listByBookingIdDetail(bookingId: string ): BookingModel {
+    async listByBookingIdDetail(bookingId: string ): Promise<BookingModel> {
 
-        const booking = this.bookingRepository.getByBookingId(bookingId)
+        return await this.bookingRepository.getByBookingId(bookingId)
 
-        return booking;
     }
 
-    listByIdDetail(id: number): BookingModel {
+    async listByIdDetail(id: number): Promise<BookingModel> {
 
-        const booking = this.bookingRepository.getById(id)
+        return await this.bookingRepository.getById(id)
 
-        return booking;
     }
 
-    create(request: Request): BookingModel {
+    async create(request: Request): Promise<BookingModel> {
 
-        
-        const bookingModel = new BookingModel();
+        return await this.bookingRepository.createBooking(request.body)
 
-        try {
-            bookingModel.userId = request.body.userId
-            bookingModel.scheduleList = request.body.scheduleList;
-            bookingModel.dataInicial = this.converter.converterToDate(request.body.dataInicial)
-            bookingModel.dataFinal = this.converter.converterToDate(request.body.dataFinal);
-
-            const bookingResponse = this.bookingRepository.createBooking(bookingModel);
-
-            return bookingResponse;
-        } catch (error) {
-            throw new Error(error)
-        }
     }
     
-    deleteById(id: number): boolean {
-        const response = this.bookingRepository.deleteById(id)
-        return response
+    async deleteById(id: number): Promise<UpdateResult> {
+        
+        return await this.bookingRepository.deleteById(id);
+
     }
 
-    deleteByBookingId(bookingId: string): boolean {
-        const response = this.bookingRepository.deleteByBookingId(bookingId)
-        return response
+    async deleteByBookingId(bookingId: string): Promise<UpdateResult> {
+        
+        return await this.bookingRepository.deleteByBookingId(bookingId);
+
     }
     
 }
