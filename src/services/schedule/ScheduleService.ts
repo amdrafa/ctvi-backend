@@ -1,4 +1,5 @@
 import { Request } from "express";
+import moment from "moment";
 import { StatusEnum } from "../../enums/statusEnumerator";
 import { ScheduleModel } from "../../model/ScheduleModel";
 import { ScheduleRepository } from "../../repositories/ScheduleRepository";
@@ -21,7 +22,7 @@ export class ScheduleService implements IScheduleService{
 
     async create(request: Request): Promise<ScheduleModel[]> {
 
-        const schedules: ScheduleModel[] = request.body;
+        const schedules: ScheduleModel[] = this.splitArrayInDays(request.body);
 
         const createdSchedules: ScheduleModel[] = []
 
@@ -42,6 +43,29 @@ export class ScheduleService implements IScheduleService{
         })
 
         return createdSchedules
+    }
+
+    splitArrayInDays(scheduleModel: ScheduleModel[]){
+
+        let schedulesPorDia: ScheduleModel[];
+        scheduleModel.forEach(schedule => {
+            let dataInicial = moment(schedule.startDate);
+            let dataFinal = moment(schedule.finalDate);
+            let diasTotais = dataInicial.diff(dataFinal, 'days');
+
+            for (let i = 0; i < diasTotais; i++) {
+                if(i==0){
+                    schedule.finalDate = dataInicial.hour(18).toDate()
+                }else{
+                    let dataDoDia = dataInicial.add(1, 'days').toDate()
+                    schedule.startDate = moment(dataDoDia).hour(8).toDate()
+                    schedule.finalDate = moment(dataDoDia).hour(18).toDate()
+                }
+                schedulesPorDia.push(schedule)
+            }
+           
+        });
+        return schedulesPorDia
     }
 
 }
