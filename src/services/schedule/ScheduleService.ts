@@ -46,28 +46,39 @@ export class ScheduleService implements IScheduleService{
     }
 
     splitArrayInDays(scheduleModel: ScheduleModel[]){
-        let arrayFinal : ScheduleModel[] = [];
+        let schedulesPorDia: ScheduleModel[] = [];
+        
         scheduleModel.forEach(schedule => {
             let dataInicial = moment(schedule.startDate);
             let dataFinal = moment(schedule.finalDate);
-            let diasTotais = dataFinal.diff(dataInicial, 'days');
-            let schedulesPorDia: ScheduleModel[] = [];
+            let diaInicial = dataInicial.date();
+            let diaFinal = dataFinal.date();
+            let diasTotais = diaFinal - diaInicial;
+            
             for (let i = 0; i <= diasTotais; i++) {
+                let novoSchedule = new ScheduleModel;
+                novoSchedule.status = schedule.status
+                novoSchedule.isExclusive = schedule.isExclusive
                 if(i==0){
-                    schedule.finalDate = dataInicial.hour(18).toDate()
+                    //primeiro item
+                    novoSchedule.startDate = dataInicial.toDate()
+                    novoSchedule.finalDate = dataInicial.hour(18).toDate()
                 }else{
                     let dataDoDia = dataInicial.add(1, 'days').toDate()
-                    schedule.startDate = moment(dataDoDia).hour(8).toDate()
-                    schedule.finalDate = moment(dataDoDia).hour(18).toDate()
+                    if(i == diasTotais){
+                        //último item
+                        console.log("last item")
+                        novoSchedule.startDate = dataFinal.hour(8).toDate()
+                        novoSchedule.finalDate = dataFinal.toDate()
+                    }else{
+                        novoSchedule.startDate = moment(dataDoDia).hour(8).toDate()
+                        novoSchedule.finalDate = moment(dataDoDia).hour(18).toDate()
+                    }
                 }
-
-                schedulesPorDia.push(schedule)
+                schedulesPorDia.push(novoSchedule)
             }
-            schedulesPorDia.forEach(schedule =>{
-                arrayFinal.push(schedule)
-            })
         });
-        return arrayFinal
+        return schedulesPorDia
     }
 
 }
