@@ -1,3 +1,4 @@
+import { TermsModel } from './TermsModel';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { StatusEnum } from "../enums/statusEnumerator";
 import { ScheduleModel } from "./ScheduleModel";
@@ -34,4 +35,7 @@ export class BookingModel{
 
     @OneToMany(() => ScheduleModel, schedule => schedule.booking, {cascade:true, eager: true})
     public schedules: ScheduleModel[];
+
+    @OneToMany(() => TermsModel, terms => terms.booking, {cascade: true, eager: true})
+    terms: TermsModel
 }

@@ -1,3 +1,4 @@
+import { TermsModel } from './../model/TermsModel';
 import { ResourceModel } from './../model/ResourceModel';
 import { CompanyModel } from './../model/CompanyModel';
 import "reflect-metadata"
@@ -14,6 +15,6 @@ export const TypeORMDataSource = new DataSource({
     password: "root",
     database: "ctvi",
     synchronize: true,
-    entities: [UserModel, CompanyModel, ResourceModel, BookingModel, ScheduleModel],
+    entities: [UserModel, CompanyModel, ResourceModel, BookingModel, ScheduleModel, TermsModel],
     logging: false,
 })
