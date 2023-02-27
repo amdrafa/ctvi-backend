@@ -4,6 +4,7 @@ import { UserRepository } from "../../repositories/UserRepository";
 import { IUserService } from "./IUserService";
 import bcrypt from 'bcrypt'
 import { CompanyService } from "../company/CompanyService";
+import { CompanyModel } from "../../model/CompanyModel";
 
 export class UserService implements IUserService  {
 
@@ -109,9 +110,9 @@ export class UserService implements IUserService  {
 
         updatedUser.companyId = companyId;
 
-        const isUpdateSuccessful  = await this.userRepository.updateUser(updatedUser)
+        const isUserUpdateSuccessful  = await this.userRepository.updateUser(updatedUser)
 
-        return isUpdateSuccessful ? true : false;
+        return isUserUpdateSuccessful ? true : false;
     }
 
 }
