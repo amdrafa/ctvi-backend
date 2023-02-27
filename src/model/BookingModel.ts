@@ -8,8 +8,8 @@ export class BookingModel{
     @PrimaryGeneratedColumn()
     id?: number;
 
-    @Column()
-    bookingId: string;
+    @Column({nullable: true})
+    bookingId?: string;
 
     @Column()
     userId: number;

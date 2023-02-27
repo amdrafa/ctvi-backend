@@ -24,10 +24,19 @@ export class ScheduleService implements IScheduleService{
 
         const schedules: ScheduleModel[] = this.splitArrayInDays(request.body);
 
+        return this.splitSchedules(schedules)
+    }
+
+    async createWithArray(schdules: ScheduleModel[]): Promise<ScheduleModel[]> {
+
+        const schedules: ScheduleModel[] = this.splitArrayInDays(schdules);
+
+        return this.splitSchedules(schedules)
+    }
+
+    splitSchedules(schedules) : ScheduleModel[]{
         const createdSchedules: ScheduleModel[] = []
-
         let newSchedule = null;
-
         schedules.forEach(async (schedule) => {
 
             const IsScheduleAvaiable = this.scheduleRepository.verifyIfScheduleExistsByDateByInicialDate(schedule.startDate, schedule.finalDate)
@@ -40,6 +49,7 @@ export class ScheduleService implements IScheduleService{
             }
             createdSchedules.push(newSchedule);
             
+            
         })
 
         return createdSchedules
@@ -47,7 +57,7 @@ export class ScheduleService implements IScheduleService{
 
     splitArrayInDays(scheduleModel: ScheduleModel[]){
         let schedulesPorDia: ScheduleModel[] = [];
-        
+        console.log(scheduleModel)
         scheduleModel.forEach(schedule => {
             let dataInicial = moment(schedule.startDate);
             let dataFinal = moment(schedule.finalDate);

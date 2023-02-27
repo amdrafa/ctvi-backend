@@ -1,3 +1,4 @@
+import { ScheduleModel } from './../model/ScheduleModel';
 import { UpdateResult } from "typeorm";
 import { TypeORMDataSource } from "../config/DataSourceConnection";
 import { BookingModel } from "../model/BookingModel";
@@ -14,11 +15,25 @@ export class BookingRepository{
         return await this.repository.findOneBy({id: id})
     }
 
+    public async getSchedulesByBookingId(id:number){
+        // return this.repository 
+        // .createQueryBuilder("booking") 
+        // .leftJoinAndSelect("booking.schedules", "schedule")
+        // .where({id:id})
+        // .getOne()
+        return this.repository.find({relations:{schedules:true}})
+    }
+
     public async getByBookingId(bookingId:string): Promise<BookingModel> {
         return await this.repository.findOneBy({bookingId: bookingId})
     }
 
     public async createBooking(booking: BookingModel): Promise<BookingModel> {
+        return await this.repository.save(booking);
+    }
+
+    public async createBookingWithSchedules(booking: BookingModel, schedules: ScheduleModel[]): Promise<BookingModel> {
+        booking.schedules = schedules
         return await this.repository.save(booking);
     }
 

@@ -1,3 +1,4 @@
+import { ScheduleModel } from './../../model/ScheduleModel';
 import { BookingModel } from "../../model/BookingModel";
 import { IBookingService } from "./IBookingService";
 import { BookingRepository } from "../../repositories/BookingRepository";
@@ -31,9 +32,25 @@ export class BookingService implements IBookingService {
 
     }
 
+    async listSchedulesByBookingID(id:number): Promise<BookingModel[]>{
+        return await this.bookingRepository.getSchedulesByBookingId(id)
+    }
+
     async create(request: Request): Promise<BookingModel> {
 
         return await this.bookingRepository.createBooking(request.body)
+
+    }
+
+    async createWithSchedules(request: Request) {
+        const scheduleService = new ScheduleService()
+        const schedules = await scheduleService.createWithArray(request.body.scheduleArray)
+        const booking = await this.bookingRepository.createBookingWithSchedules(request.body.booking, schedules)
+        const result = {
+            booking: booking,
+            schedules: schedules
+        }
+        return result
 
     }
     

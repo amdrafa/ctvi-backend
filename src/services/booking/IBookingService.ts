@@ -9,6 +9,7 @@ export interface IBookingService{
     listByBookingIdDetail(bookingId: string):Promise<BookingModel>;
     listByIdDetail(id:number):Promise<BookingModel>;
     create(request: Request): Promise<BookingModel>;
+    createWithSchedules(request: Request): any;
     deleteById(id: number): Promise<UpdateResult>;
     deleteByBookingId(bookingId: string): Promise<UpdateResult>
 }

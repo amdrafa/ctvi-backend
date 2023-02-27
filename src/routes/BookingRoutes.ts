@@ -31,7 +31,7 @@ bookingRoutes.get("/list/:id", async (request, response) => {
 
 bookingRoutes.get("/:id/schedule", async (request, response) => {
     
-    const allSchedules = await new ScheduleService()
+    const allSchedules = await bookingService.listSchedulesByBookingID(Number(request.params.id))
 
     if(!allSchedules){
         return response.status(200).json({message: "No data found"});
@@ -43,6 +43,16 @@ bookingRoutes.get("/:id/schedule", async (request, response) => {
 bookingRoutes.post("/create", async (req, resp) => {
 
     const createBooking = await bookingService.create(req);
+
+    if(!createBooking){
+        return resp.status(200).json({message: "No data found"});
+    }
+    return resp.status(201).json(createBooking);
+})
+
+bookingRoutes.post("/create/schedules", async (req, resp) => {
+
+    const createBooking = await bookingService.createWithSchedules(req);
 
     if(!createBooking){
         return resp.status(200).json({message: "No data found"});
