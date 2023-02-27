@@ -2,7 +2,7 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToMa
 import { StatusEnum } from "../enums/statusEnumerator";
 import { ScheduleModel } from "./ScheduleModel";
 
-@Entity()
+@Entity("booking")
 export class BookingModel{
 
     @PrimaryGeneratedColumn()
@@ -32,6 +32,6 @@ export class BookingModel{
     @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: Date;
 
-    @OneToMany(() => ScheduleModel, (schedule) => schedule.booking)
-    schedules: ScheduleModel[];
+    @OneToMany(() => ScheduleModel, schedule => schedule.booking, {cascade:true})
+    public schedules: ScheduleModel[];
 }

@@ -2,7 +2,7 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryG
 import { ResourceType } from "../enums/ResourceType";
 import { ScheduleModel } from "./ScheduleModel";
 
-@Entity()
+@Entity("resource")
 export class ResourceModel{
 
     @PrimaryGeneratedColumn()
@@ -32,6 +32,4 @@ export class ResourceModel{
     @UpdateDateColumn({name: 'update_at'})
     updatedAt: Date;
 
-    @OneToMany(() => ScheduleModel, (schedule) => schedule.resource)
-    schedule: ScheduleModel;
 }

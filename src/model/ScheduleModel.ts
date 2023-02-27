@@ -3,7 +3,7 @@ import { StatusEnum } from "../enums/statusEnumerator";
 import { BookingModel } from "./BookingModel";
 import { ResourceModel } from "./ResourceModel";
 
-@Entity()
+@Entity("schedule")
 export class ScheduleModel{
 
     @PrimaryGeneratedColumn()
@@ -33,7 +33,7 @@ export class ScheduleModel{
     @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: Date;
     
-    @ManyToOne(() => BookingModel, (booking) => booking.schedules)
-    booking: BookingModel;
+    @ManyToOne(() => BookingModel, booking => booking.schedules)
+    public booking: BookingModel;
 
 }

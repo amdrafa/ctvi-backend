@@ -16,12 +16,10 @@ export class BookingRepository{
     }
 
     public async getSchedulesByBookingId(id:number){
-        // return this.repository 
-        // .createQueryBuilder("booking") 
-        // .leftJoinAndSelect("booking.schedules", "schedule")
-        // .where({id:id})
-        // .getOne()
-        return this.repository.find({relations:{schedules:true}})
+        return this.repository 
+        .createQueryBuilder("booking") 
+        .leftJoinAndSelect("booking.schedules", "schedule")
+        .getMany()
     }
 
     public async getByBookingId(bookingId:string): Promise<BookingModel> {
@@ -33,8 +31,11 @@ export class BookingRepository{
     }
 
     public async createBookingWithSchedules(booking: BookingModel, schedules: ScheduleModel[]): Promise<BookingModel> {
-        booking.schedules = schedules
-        return await this.repository.save(booking);
+        let newBooking = new BookingModel()
+        newBooking = booking
+        newBooking.schedules = schedules
+        
+        return await this.repository.save(newBooking);
     }
 
     public async deleteByBookingId(bookingId: string): Promise<UpdateResult>{

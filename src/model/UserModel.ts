@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn,  } from "typeorm";
 import { RolesEnum } from "../enums/roleEnumerator";
 
-@Entity()
+@Entity("user")
 export class UserModel {
     @PrimaryGeneratedColumn()
     id?: number;

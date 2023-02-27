@@ -3,7 +3,7 @@ import { CreateDateColumn, DeleteDateColumn, Entity, UpdateDateColumn } from 'ty
 import { Column, PrimaryGeneratedColumn } from 'typeorm';
 import { ScheduleModel } from "./ScheduleModel";
 
-@Entity()
+@Entity("company")
 export class CompanyModel{
    
     @PrimaryGeneratedColumn()
