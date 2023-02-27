@@ -32,7 +32,7 @@ export class BookingService implements IBookingService {
 
     }
 
-    async listSchedulesByBookingID(id:number): Promise<BookingModel[]>{
+    async listSchedulesByBookingID(id:number): Promise<BookingModel>{
         return await this.bookingRepository.getSchedulesByBookingId(id)
     }
 
@@ -42,15 +42,11 @@ export class BookingService implements IBookingService {
 
     }
 
-    async createWithSchedules(request: Request) {
+    async createWithSchedules(request: Request) : Promise<BookingModel> {
         const scheduleService = new ScheduleService()
-        const schedules = await scheduleService.createWithArray(request.body.scheduleArray)
-        const booking = await this.bookingRepository.createBookingWithSchedules(request.body.booking, schedules as ScheduleModel[])
-        const result = {
-            booking: booking,
-            schedules: schedules
-        }
-        return result
+        const booking = await this.bookingRepository.createBookingWithSchedules(request.body.booking)
+        await scheduleService.createWithArray(request.body.scheduleArray, booking)
+        return booking
 
     }
     
