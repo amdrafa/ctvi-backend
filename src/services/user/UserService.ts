@@ -3,6 +3,7 @@ import { UserModel } from "../../model/UserModel";
 import { UserRepository } from "../../repositories/UserRepository";
 import { IUserService } from "./IUserService";
 import bcrypt from 'bcrypt'
+import { CompanyService } from "../company/CompanyService";
 
 export class UserService implements IUserService  {
 
@@ -88,6 +89,29 @@ export class UserService implements IUserService  {
         }
         
         return user;
+    }
+
+    async bindToCompany(userId: number, companyId: number): Promise<boolean> {
+        
+        const companyService = new CompanyService()
+
+        const user = await this.userRepository.getUserById(userId);
+
+        const company = await companyService.listDetail(companyId);
+
+        if(!user || !company){
+            throw new Error("User or company not found")
+        }
+
+        let updatedUser = new UserModel();
+
+        updatedUser = user;
+
+        updatedUser.companyId = companyId;
+
+        const isUpdateSuccessful  = await this.userRepository.updateUser(updatedUser)
+
+        return isUpdateSuccessful ? true : false;
     }
 
 }

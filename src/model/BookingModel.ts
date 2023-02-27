@@ -32,6 +32,6 @@ export class BookingModel{
     @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: Date;
 
-    @OneToMany(() => ScheduleModel, schedule => schedule.booking, {cascade:true})
+    @OneToMany(() => ScheduleModel, schedule => schedule.booking, {cascade:true, eager: true})
     public schedules: ScheduleModel[];
 }

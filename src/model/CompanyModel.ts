@@ -1,7 +1,8 @@
 import { StatusEnum } from './../enums/statusEnumerator';
-import { CreateDateColumn, DeleteDateColumn, Entity, UpdateDateColumn } from 'typeorm';
+import { CreateDateColumn, DeleteDateColumn, Entity, OneToMany, UpdateDateColumn } from 'typeorm';
 import { Column, PrimaryGeneratedColumn } from 'typeorm';
-import { ScheduleModel } from "./ScheduleModel";
+import { UserModel } from './UserModel';
+import { CompanyEnum } from '../enums/companyEnumerator';
 
 @Entity("company")
 export class CompanyModel{
@@ -18,11 +19,11 @@ export class CompanyModel{
     @Column(
         {
             type: "enum",
-            enum: StatusEnum,
-            default: StatusEnum.PreApproved
+            enum: CompanyEnum,
+            default: CompanyEnum.Active
         }
     )
-    status: StatusEnum;
+    status: CompanyEnum;
 
     @CreateDateColumn({name: 'created_at'})
     createdAt: Date;
@@ -32,5 +33,8 @@ export class CompanyModel{
 
     @UpdateDateColumn({ name: 'updated_at', nullable: true})
     updatedAt: Date;
+
+    @OneToMany(() => UserModel, user => user.company, {cascade:true, eager: true})
+    public users: UserModel[];
     
 }

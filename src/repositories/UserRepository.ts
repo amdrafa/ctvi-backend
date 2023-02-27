@@ -20,8 +20,8 @@ export class UserRepository{
 
     public async updateUser(user: UserModel): Promise<UserModel> {
         const currentUser = await this.repository.findOneBy({email: user.email})
-        if (currentUser){
-            throw new Error('Email already registered')
+        if (!currentUser){
+            throw new Error('User not found')
         }
 
         const updatedUser = await this.repository.update({id: currentUser.id}, user)
@@ -42,5 +42,6 @@ export class UserRepository{
     public async getUserByEmailAndPassword(email: string, password: string): Promise<UserModel> {
         return await this.repository.findOneBy({email: email, password: password})
     } 
+    
 
 }

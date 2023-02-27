@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn,  } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne,  } from "typeorm";
 import { RolesEnum } from "../enums/roleEnumerator";
+import { CompanyModel } from "./CompanyModel";
 
 @Entity("user")
 export class UserModel {
@@ -35,4 +36,7 @@ export class UserModel {
 
     @UpdateDateColumn({ name: 'updated_at' })
     updatedAt?: Date;
+
+    @ManyToOne(() => CompanyModel, company => company.users)
+    public company: CompanyModel;
 }

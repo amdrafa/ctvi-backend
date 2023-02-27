@@ -1,5 +1,5 @@
 import { ValidateToken } from './../middlewares/ValidateToken';
-import { Router } from 'express';
+import { response, Router } from 'express';
 import { UserService } from '../services/user/UserService';
 import jwt from 'jsonwebtoken';
 
@@ -32,7 +32,7 @@ userRoutes.post("/login", async (request, response) => {
 })
 
 
-userRoutes.use(ValidateToken)
+// userRoutes.use(ValidateToken)
 
 userRoutes.get("/list", async (request, response) => {
     const allUsers = await userService.list();
@@ -78,6 +78,15 @@ userRoutes.delete("/delete/:id", async (request, response) => {
     return response.status(200).send();
 })
 
+userRoutes.post("/:userId/bindcompany/:companyId", async (request, response) => {
+
+    const { userId, companyId } = request.params;
+
+    const isUserUpdated = await userService.bindToCompany(Number(userId), Number(companyId))
+
+    return response.json(isUserUpdated);
+
+})
 
 
 

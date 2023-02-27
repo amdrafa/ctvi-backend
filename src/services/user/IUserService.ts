@@ -9,5 +9,6 @@ export interface IUserService{
     update(request: Request):Promise<UserModel>;
     delete(id:number): Promise<boolean>;
     login(email: string, password: string): Promise<UserModel>;
+    bindToCompany(userId: number, companyId: number): Promise<boolean>;
 
 }
