@@ -60,6 +60,14 @@ bookingRoutes.post("/create/schedules", async (req, resp) => {
     return resp.status(201).json(createBooking);
 })
 
+bookingRoutes.put("/update/:id",async (req, res) => {
+    return res.status(200).json(bookingService.updateBooking(req))
+})
+
+bookingRoutes.put("/update/:id/terms", async (req, res) => {
+    return res.status(200).json(bookingService.updateTermsByBookingId(req))
+})
+
 bookingRoutes.delete("/delete/:id", async (req, resp) =>{
     const id = req.params.id
 
