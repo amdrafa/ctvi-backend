@@ -32,4 +32,6 @@ export class ResourceModel{
     @UpdateDateColumn({name: 'update_at'})
     updatedAt: Date;
 
+    @OneToMany(()=> ScheduleModel, schedule => schedule.resource)
+    schedule: ScheduleModel
 }

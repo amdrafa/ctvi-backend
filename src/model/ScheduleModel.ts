@@ -36,4 +36,6 @@ export class ScheduleModel{
     @ManyToOne(() => BookingModel, booking => booking.schedules)
     public booking: BookingModel;
 
+    @ManyToOne(() => ResourceModel, resource => resource.schedule)
+    resource: ResourceModel
 }
