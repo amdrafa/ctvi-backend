@@ -11,7 +11,7 @@ export interface IBookingService{
     create(request: Request): Promise<BookingModel>;
     createWithSchedules(request: Request): Promise<BookingModel>;
     updateBooking(request: Request): Promise<UpdateResult>;
-    updateTermsByBookingId(request: Request): Promise<UpdateResult>;
+    updateTermsByBookingId(request: Request): Promise<BookingModel>;
     deleteById(id: number): Promise<UpdateResult>;
     deleteByBookingId(bookingId: string): Promise<UpdateResult>
 }

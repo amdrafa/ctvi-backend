@@ -60,9 +60,9 @@ export class BookingService implements IBookingService {
     }
 
     async updateTermsByBookingId(request: Request) {
-        const currentBooking = await this.listByIdDetail(Number(request.params.id))
+        const currentBooking = await this.bookingRepository.getSchedulesByBookingId(Number(request.params.id))
         currentBooking.terms = await this.insertTerms(request)
-        return this.bookingRepository.updateBooking(currentBooking)
+        return this.bookingRepository.createBooking(currentBooking)
     }
     
     async deleteById(id: number): Promise<UpdateResult> {
