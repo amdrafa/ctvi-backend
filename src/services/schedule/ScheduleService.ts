@@ -24,7 +24,7 @@ export class ScheduleService implements IScheduleService{
 
         const schedules: ScheduleModel[] = this.splitArrayInDays(request.body);
 
-        return this.splitSchedules(schedules)
+        return await this.splitSchedules(schedules)
     }
 
     async createWithArray(schdules: ScheduleModel[], booking): Promise<ScheduleModel[]> {
@@ -33,27 +33,24 @@ export class ScheduleService implements IScheduleService{
         schedules.map(schdules =>{
             schdules.booking = booking
         })
-        return this.splitSchedules(schedules)
+        return await this.splitSchedules(schedules)
     }
 
-    splitSchedules(schedules) : ScheduleModel[]{
-        const createdSchedules: ScheduleModel[] = []
-        let newSchedule = null;
-        schedules.forEach(async (schedule) => {
+    async splitSchedules(schedules) : Promise<ScheduleModel[]>{
+        let createdSchedules: ScheduleModel[] = []
+        let newSchedule: ScheduleModel
+        
+        schedules.forEach(async (schedule: ScheduleModel) => {
 
             const IsScheduleAvaiable = this.scheduleRepository.verifyIfScheduleExistsByDateByInicialDate(schedule.startDate, schedule.finalDate)
 
             if(IsScheduleAvaiable){
                 schedule.status = StatusEnum.PreApproved
-                newSchedule = await this.scheduleRepository.create(schedule)
             }else{
                 schedule.status = StatusEnum.NotAvailable
             }
-            createdSchedules.push(newSchedule);
-            
-            
+            createdSchedules.push(await this.scheduleRepository.create(schedule)) 
         })
-
         return createdSchedules
     }
 
