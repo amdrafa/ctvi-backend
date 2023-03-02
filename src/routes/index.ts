@@ -1,3 +1,4 @@
+import { monitoringRoute } from './MonitoringRoutes';
 import { equipementRoutes } from './EquipmentRoute';
 import { termsRoutes } from './TermsRoutes';
 import { resourceRoutes } from './ResourceRoutes';
@@ -13,6 +14,8 @@ export const router = Router();
 router.use("/user", userRoutes);
 
 //router.use(ValidateToken);
+
+router.use('/monitoring', monitoringRoute)
 
 router.use("/equipment", equipementRoutes)
 

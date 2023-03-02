@@ -1,3 +1,4 @@
+import { MonitoringModel } from './../model/MonitoringModel';
 import { EquipmentModel } from './../model/EquipmentModel';
 import { TermsModel } from './../model/TermsModel';
 import { ResourceModel } from './../model/ResourceModel';
@@ -16,6 +17,6 @@ export const TypeORMDataSource = new DataSource({
     password: "123456",
     database: "ctvi",
     synchronize: true,
-    entities: [UserModel, CompanyModel, ResourceModel, BookingModel, ScheduleModel, TermsModel, EquipmentModel],
+    entities: [UserModel, CompanyModel, ResourceModel, BookingModel, ScheduleModel, TermsModel, EquipmentModel, MonitoringModel],
     logging: false,
 })
