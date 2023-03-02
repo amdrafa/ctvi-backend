@@ -12,11 +12,7 @@ export class BookingRepository{
     }
 
     public async getById(id:number): Promise<BookingModel> {
-        return await this.repository.findOne({where:{id: id}, relations: {schedules:true}})
-    }
-
-    public async getSchedulesByBookingId(id:number){
-        return this.repository.findOne({where:{id:id}, relations: {schedules:true}})
+        return await this.repository.findOne({where:{id: id}, relations: {schedules:true, terms:true}})
     }
 
     public async getByBookingId(bookingId:string): Promise<BookingModel> {

@@ -1,3 +1,4 @@
+import { equipementRoutes } from './EquipmentRoute';
 import { termsRoutes } from './TermsRoutes';
 import { resourceRoutes } from './ResourceRoutes';
 import { ValidateToken } from './../middlewares/ValidateToken';
@@ -11,7 +12,9 @@ export const router = Router();
 
 router.use("/user", userRoutes);
 
-router.use(ValidateToken);
+//router.use(ValidateToken);
+
+router.use("/equipment", equipementRoutes)
 
 router.use("/terms", termsRoutes)
 

@@ -27,5 +27,9 @@ scheduleRoutes.get("/list/:id", (request, response) => {
     return response.status(200).json(schedule)
 })
 
+scheduleRoutes.post("/approve/:id", async (req, res)=>{
+    return res.status(200).json(await scheduleService.approveSchedule(req))
+})
+
 
 

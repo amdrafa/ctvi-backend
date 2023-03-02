@@ -37,7 +37,7 @@ export class BookingService implements IBookingService {
     }
 
     async listSchedulesByBookingID(id:number): Promise<BookingModel>{
-        return await this.bookingRepository.getSchedulesByBookingId(id)
+        return await this.bookingRepository.getById(id)
     }
 
     async create(request: Request): Promise<BookingModel> {
@@ -52,8 +52,10 @@ export class BookingService implements IBookingService {
         booking.terms = await this.mappingTerms(request.body.booking.terms)
         this.bookingRepository.createBooking(booking)
         await scheduleService.createWithArray(request.body.scheduleArray, booking)
-        const responseSchedules = this.bookingRepository.getSchedulesByBookingId(booking.id)
-        return await responseSchedules
+        const responseSchedules = await this.bookingRepository.getById(booking.id)
+        if(responseSchedules){
+            return responseSchedules
+        }
 
     }
 
@@ -62,9 +64,9 @@ export class BookingService implements IBookingService {
     }
 
     async updateTermsByBookingId(request: Request) {
-        const currentBooking = await this.bookingRepository.getSchedulesByBookingId(Number(request.params.id))
+        const currentBooking = await this.bookingRepository.getById(Number(request.params.id))
         currentBooking.terms = await this.insertTerms(request)
-        return this.bookingRepository.createBooking(currentBooking)
+        return await this.bookingRepository.createBooking(currentBooking)
     }
     
     async deleteById(id: number): Promise<UpdateResult> {
@@ -92,6 +94,17 @@ export class BookingService implements IBookingService {
             termsSearched.push(newTerms)
         })
         return termsSearched
+    }
+
+    async approveBooking(resquest: Request){
+        let booking = await this.bookingRepository.getById(Number(resquest.params.id))
+        booking.status = StatusEnum.Approved
+        booking.schedules.map((schedule)=>{
+            if(schedule.status == StatusEnum.PreApproved){
+                schedule.status = StatusEnum.Approved
+            }
+        })
+        return await this.bookingRepository.createBookingWithSchedules(booking)
     }
     
 }

@@ -9,5 +9,6 @@ export interface IScheduleService{
 
     listByBookingId(bookingId:number):Promise<ScheduleModel[]>;
 
+    approveSchedule(request: Request): Promise<ScheduleModel>
     
 }

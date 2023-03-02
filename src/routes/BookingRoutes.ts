@@ -83,3 +83,7 @@ bookingRoutes.delete("/delete/bookingId/:id", async (req, resp) =>{
     return resp.json({message: wasUserDeleted.affected > 0 ? "User deleted." : "Error when deleting user."})
 })
 
+bookingRoutes.post("/aprove/:id",async (req, res) => {
+    return res.status(200).json(bookingService.approveBooking(req))
+})
+

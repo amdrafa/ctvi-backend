@@ -7,11 +7,11 @@ export class ScheduleRepository{
     repository = TypeORMDataSource.getRepository(ScheduleModel)
 
     public async getScheduleById(id:number): Promise<ScheduleModel> {
-        return await this.repository.findOneBy({id: id })
+        return await this.repository.findOne({where:{id: id}, relations: {booking:true, resource:true} })
     }
 
     public async getAllSchedulesByBookingId(id:number): Promise<ScheduleModel[]>{
-        return await this.repository.find({relations: {booking: true}, where: {id: id}})
+        return await this.repository.find({relations: {booking: true, resource:true}, where: {id: id}})
     }
 
     public async create(schedule: ScheduleModel): Promise<ScheduleModel>{
