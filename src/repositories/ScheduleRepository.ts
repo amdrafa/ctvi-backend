@@ -19,7 +19,7 @@ export class ScheduleRepository{
     }
 
     public async verifyIfScheduleExistsByDateByInicialDate(startDate: Date, finalDate: Date): Promise<boolean>{
-        const schedule = this.repository.findOneBy({startDate:startDate, finalDate: finalDate, isExclusive: true})
+        const schedule = await this.repository.findOneBy({startDate:startDate, finalDate: finalDate, isExclusive: true})
         return schedule ? false : true;
     }
     
