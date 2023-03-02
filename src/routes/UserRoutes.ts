@@ -8,13 +8,16 @@ export const userRoutes = Router();
 const userService = new UserService();
 
 userRoutes.post("/create", (request, response) => {
+
+    // FAZER VALIDAÇÃO DE EMAIL. SALVANDO 2 USERS COM O MESMO EMAIL.
+    
     const user = userService.create(request);
 
     if(!user){
         return response.status(200).json({message: "It was not possible to create this user."})
     }
     
-    return response.status(200).json(user);
+    return response.status(201).json(user);
 })
 
 userRoutes.post("/login", async (request, response) => {
@@ -26,7 +29,8 @@ userRoutes.post("/login", async (request, response) => {
         return response.status(401).json({message: "Invalid email or password"})
     }
 
-    const token = jwt.sign({ id: user?.id }, "ctvi-secret", { expiresIn: "8h" })
+
+    const token = jwt.sign({ id: user?.id, name: user?.name, roles: user?.roles, email: user?.email}, "ctvi-secret", { expiresIn: "8h" })
 
     return response.status(200).json({user, token});
 })

@@ -5,6 +5,7 @@ import { IUserService } from "./IUserService";
 import bcrypt from 'bcrypt'
 import { CompanyService } from "../company/CompanyService";
 import { CompanyModel } from "../../model/CompanyModel";
+import { RolesEnum } from "../../enums/roleEnumerator";
 
 export class UserService implements IUserService  {
 
@@ -24,6 +25,8 @@ export class UserService implements IUserService  {
         try {
 
             const user = new UserModel();
+
+                console.log(request.body)
 
             
                 user.name = request.body.name;

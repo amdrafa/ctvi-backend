@@ -26,7 +26,7 @@ export class UserModel {
     isForeigner: boolean;
 
     @Column({type: "text"})
-    roles: Enumerator<RolesEnum>;
+    roles: RolesEnum;
 
     @CreateDateColumn({ name: 'created_at'})
     createdAt?: Date;

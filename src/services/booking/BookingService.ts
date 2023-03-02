@@ -49,9 +49,10 @@ export class BookingService implements IBookingService {
     async createWithSchedules(request: Request) : Promise<BookingModel> {
         const scheduleService = new ScheduleService()
         const booking = await this.bookingRepository.createBookingWithSchedules(request.body.booking)
-        booking.terms = await this.mappingTerms(request.body.booking.terms)
+        // booking.terms = await this.mappingTerms(request.body.booking.terms)
         this.bookingRepository.createBooking(booking)
-        await scheduleService.createWithArray(request.body.scheduleArray, booking)
+        const schedules = await scheduleService.createWithArray(request.body.scheduleArray, booking)
+        booking.schedules = schedules
         return booking
 
     }
