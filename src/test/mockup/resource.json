@@ -1,0 +1,24 @@
+[
+    {
+        "id": "001",
+        "name": "VDA",
+        "type": "testtrack",
+        "capacity": 2,
+        "isActive": true,
+        "createdAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "deletedAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "updatedAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "isExclusive": false
+    },
+    {
+        "id": "002",
+        "name": "VDAsaddsa",
+        "type": "workshop",
+        "capacity": 2,
+        "isActive": true,
+        "createdAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "deletedAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "updatedAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "isExclusive": false
+    }
+]

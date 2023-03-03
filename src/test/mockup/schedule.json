@@ -1,0 +1,45 @@
+[
+    {
+        "scheduleId": 123,
+        "startDate": "Sun Jan 01 2023 11:00:00 GMT+0000",
+        "finalDate": "Wed Feb 01 2023 11:00:00 GMT+0000",
+        "listResource": [1, 2, 3],
+        "status": "Enumerator",
+        "createdAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "deletedAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "updatedAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "isExclusive": false
+    },
+    {
+        "scheduleId": 234,
+        "startDate": "Sun Jan 01 2023 11:00:00 GMT+0000",
+        "finalDate": "Wed Mar 01 2023 11:00:00 GMT+0000",
+        "listResource": [1, 2, 3],
+        "status": "Enumerator",
+        "createdAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "deletedAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "updatedAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "isExclusive": false
+    },
+    {
+        "scheduleId": 345,
+        "startDate": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "finalDate": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "listResource": [1, 2, 3],
+        "status": "Enumerator",
+        "createdAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "deletedAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "updatedAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "isExclusive": true
+    },
+    {
+        "scheduleId": 546,
+        "startDate": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "finalDate": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "listResource": [1, 2, 3],
+        "status": "Enumerator",
+        "createdAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "deletedAt": "Fri Aug 26 2022 08:00:00 GMT-0300",
+        "updatedAt": "Fri Aug 26 2022 08:00:00 GMT-0300"
+    }
+]

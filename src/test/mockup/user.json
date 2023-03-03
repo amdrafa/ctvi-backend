@@ -1,0 +1,16 @@
+[
+    {
+        "id": "001",
+        "name": "John Doe",
+        "email": "John@doe.com",
+        "password": "123123",
+        "companyId": "ABC01",
+        "document": "03873819839",
+        "isForeigner": false,
+        "roles": ["Admin", "User"],
+        "createdAt": "",
+        "deletedAt": "",
+        "updatedAt": ""
+    }
+    
+]
