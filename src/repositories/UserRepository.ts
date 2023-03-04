@@ -39,6 +39,10 @@ export class UserRepository{
     
     }
 
+    public async getUserByEmail(email: string): Promise<UserModel> {
+        return await this.repository.findOneBy({email: email})
+    } 
+
     public async getUserByEmailAndPassword(email: string, password: string): Promise<UserModel> {
         return await this.repository.findOneBy({email: email, password: password})
     } 

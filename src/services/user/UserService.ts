@@ -25,18 +25,19 @@ export class UserService implements IUserService  {
         try {
 
             const user = new UserModel();
+            user.name = request.body.name;
+            user.password = request.body.password;
+            user.email = request.body.email;
+            user.document = request.body.document;
+            user.isForeigner = request.body.isForeigner;
+            user.roles = request.body.roles;
 
-                console.log(request.body)
-
-            
-                user.name = request.body.name;
-                user.password = request.body.password;
-                user.email = request.body.email;
-                user.document = request.body.document;
-                user.isForeigner = request.body.isForeigner;
-                user.roles = request.body.roles;
-            
-            return this.userRepository.createUser(user)
+            let existUser = await this.userRepository.getUserByEmail(user.email)
+            console.log( existUser)
+            if(!existUser){
+                return this.userRepository.createUser(user)
+            }
+            return null;
             
         } catch (error) {
             return null;
