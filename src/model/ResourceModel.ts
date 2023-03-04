@@ -17,7 +17,7 @@ export class ResourceModel{
     })
     type: ResourceType;
 
-    @Column()
+    @Column({nullable: true})
     capacity: number;
 
     @Column({name: 'is_active', type:'boolean'})
