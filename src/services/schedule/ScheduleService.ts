@@ -31,7 +31,6 @@ export class ScheduleService implements IScheduleService{
     }
 
     async createWithArray(schedules: Promise<ScheduleModel[]>, booking: BookingModel): Promise<ScheduleModel[]> {
-
         const newSchedulesArray: ScheduleModel[] = await this.splitArrayInDays(schedules);
         newSchedulesArray.map(schedule =>{
             schedule.booking = booking
@@ -41,11 +40,11 @@ export class ScheduleService implements IScheduleService{
 
     async splitSchedules(schedules) : Promise<ScheduleModel[]>{
         let createdSchedules: ScheduleModel[] = []
-
+        
         await schedules.forEach(async (schedule: ScheduleModel) => {
-
+            
             let IsScheduleAvaiable = await this.scheduleRepository.verifyIfScheduleExistsByDateByInicialDate(schedule.startDate, schedule.finalDate)
-
+            console.log(IsScheduleAvaiable)
             if(IsScheduleAvaiable){
                 schedule.status = StatusEnum.PreApproved
             }else{
@@ -56,10 +55,10 @@ export class ScheduleService implements IScheduleService{
         return createdSchedules
     }
 
-    async splitArrayInDays(scheduleModel: Promise<ScheduleModel[]>){
+    async splitArrayInDays(scheduleModel: ScheduleModel[]){
         let schedulesPorDia: ScheduleModel[] = [];
-        console.log(scheduleModel);
-        (await scheduleModel).forEach(schedule => {
+
+        scheduleModel.forEach(schedule => {
             let dataInicial = moment(schedule.startDate);
             let dataFinal = moment(schedule.finalDate);
             let diaInicial = dataInicial.date();
@@ -85,6 +84,7 @@ export class ScheduleService implements IScheduleService{
                         novoSchedule.finalDate = moment(dataDoDia).hour(18).toDate()
                     }
                 }
+
                 schedulesPorDia.push(novoSchedule)
             }
         });

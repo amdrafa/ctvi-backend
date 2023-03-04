@@ -11,6 +11,7 @@ import { Converter } from "../../utils/Converter";
 import { UpdateResult } from "typeorm";
 import { ParamsDictionary } from 'express-serve-static-core';
 import { ParsedQs } from 'qs';
+import { UserService } from '../user/UserService';
 
 export class BookingService implements IBookingService {
     
@@ -49,9 +50,24 @@ export class BookingService implements IBookingService {
     async createWithSchedules(request: Request) : Promise<BookingModel> {
         let scheduleService = new ScheduleService()
         let booking = new BookingModel()
-        booking = await this.bookingRepository.createBookingWithSchedules(request.body.booking)
-        await scheduleService.createWithArray(request.body.scheduleArray, booking)
-        return booking
+
+        try {
+
+            let userService = new UserService()
+            let userFound = await userService.listById(request.body.booking.userId)
+
+            if(userFound){
+                console.log("User found")
+                booking = await this.bookingRepository.createBookingWithSchedules(request.body.booking)
+                await scheduleService.createWithArray(request.body.scheduleArray, booking)
+                return booking
+            }
+
+            return null
+        } catch (error) {
+            return error
+        }
+
     }
 
     async updateBooking(request: Request): Promise<UpdateResult> {

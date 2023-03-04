@@ -21,7 +21,7 @@ export class BookingModel{
     @Column({type: "timestamp"})
     dataFinal: Date;
 
-    @Column({type: "enum", enum: StatusEnum})
+    @Column({type: "enum", enum: StatusEnum, nullable: true})
     status: StatusEnum;
 
     @CreateDateColumn({ name: 'created_at'})
