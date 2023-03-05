@@ -50,7 +50,6 @@ export class UserService implements IUserService  {
     update(request: Request): Promise<UserModel> {
 
         const user = new UserModel();
-
         
             user.id = request.body.id;
             user.companyId = request.body.companyId;
