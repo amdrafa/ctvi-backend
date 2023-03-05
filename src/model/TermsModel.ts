@@ -8,6 +8,9 @@ export class TermsModel{
     id: number
 
     @Column({type:"text"})
+    title: string
+
+    @Column({type:"text"})
     text: string
 
     @CreateDateColumn({name: "created_at"})

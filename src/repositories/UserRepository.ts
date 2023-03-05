@@ -24,7 +24,7 @@ export class UserRepository{
             throw new Error('User not found')
         }
 
-        const updatedUser = await this.repository.update({id: currentUser.id}, user)
+        const updatedUser = await this.repository.update({id: user.id}, user)
 
         if(!updatedUser){
             throw new Error("Error when updating user")
