@@ -2,6 +2,7 @@ import { CertificateService } from './../services/certificate/CertificateService
 import multer from "multer";
 import { Router } from "express"
 import { error } from 'console';
+import { UserService } from '../services/user/UserService';
 
 export const certificateRoutes = Router()
 

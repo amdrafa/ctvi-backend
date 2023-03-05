@@ -12,6 +12,9 @@ export class CertificateService implements ICertificateService{
     async listByID(request: Request): Promise<CertificateModel> {
         return await this.repository.listById(Number(request.params.id))
     }
+    async listByIdNumber(id: Number): Promise<CertificateModel> {
+        return await this.repository.listById(Number(id))
+    }
     async create(request: Request): Promise<CertificateModel> {
         return await this.repository.create(request.body)
     }
@@ -29,5 +32,4 @@ export class CertificateService implements ICertificateService{
         }
         throw new Error("Certificate sended doesn't exists")
     }
-    
 }

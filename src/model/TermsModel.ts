@@ -7,7 +7,7 @@ export class TermsModel{
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({type:"text"})
+    @Column({type:"text", nullable: true})
     title: string
 
     @Column({type:"text"})
