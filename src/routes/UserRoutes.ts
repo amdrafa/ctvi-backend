@@ -134,4 +134,11 @@ userRoutes.post('/:userId/upload/:certificateId', upload.single('certificate'), 
 
 
 
+userRoutes.post("/:userId/approve/:certificateId", async (req, res) => {
 
+    const { userId, certificateId } = req.params;
+    const userService = new UserService()
+    let isUserUpdated = await userService.updateCertificates(req, Number(userId), Number(certificateId))
+    return res.json(isUserUpdated);
+
+})
