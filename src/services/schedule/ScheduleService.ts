@@ -37,7 +37,7 @@ export class ScheduleService implements IScheduleService{
         return await this.splitSchedules(schedules)
     }
 
-    async createWithArray(schedules: Promise<ScheduleModel[]>, booking: BookingModel): Promise<ScheduleModel[]> {
+    async createWithArray(schedules: ScheduleModel[], booking: BookingModel): Promise<ScheduleModel[]> {
         const newSchedulesArray: ScheduleModel[] = await this.splitArrayInDays(schedules);
         newSchedulesArray.map(schedule =>{
             schedule.booking = booking

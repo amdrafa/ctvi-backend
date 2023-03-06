@@ -2,10 +2,8 @@ import { Request } from "express";
 import { UserModel } from "../../model/UserModel";
 import { UserRepository } from "../../repositories/UserRepository";
 import { IUserService } from "./IUserService";
-import bcrypt from 'bcrypt'
+//import bcrypt from 'bcrypt'
 import { CompanyService } from "../company/CompanyService";
-import { CompanyModel } from "../../model/CompanyModel";
-import { RolesEnum } from "../../enums/roleEnumerator";
 import { CertificateService } from "../certificate/CertificateService";
 import { CertificateModel } from "../../model/CertificateModel";
 
@@ -33,16 +31,7 @@ export class UserService implements IUserService  {
             user.isForeigner = request.body.isForeigner;
             user.roles = request.body.roles;
 
-            
-                user.name = request.body.name;
-                user.password = request.body.password;
-                user.email = request.body.email;
-                user.document = request.body.document;
-                user.isForeigner = request.body.isForeigner;
-                user.roles = request.body.roles;
-            
-
-            bcrypt.hash(user.password, 10, function(err, hash){
+            /*bcrypt.hash(user.password, 10, function(err, hash){
 
                 if(err){
                     throw new Error("Error when encrypting password");
@@ -50,7 +39,7 @@ export class UserService implements IUserService  {
         
                 user.password = hash;
            
-            })
+            })*/
 
             return this.userRepository.createUser(user)
             

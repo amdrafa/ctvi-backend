@@ -11,11 +11,7 @@ TypeORMDataSource.initialize()
     .catch((error) => console.log("Error: " + error))
 
     const app = express();
-
     app.use(cors())
-
     app.use(express.json());
-
     app.use(router);
-
     app.listen(4444, () => console.log('Server is running'));
