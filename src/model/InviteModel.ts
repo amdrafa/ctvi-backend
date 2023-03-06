@@ -6,6 +6,9 @@ export class InviteModel{
     @PrimaryGeneratedColumn()
     id?: number;
 
+    @Column({name: 'booking_id'})
+    bookingId: string;
+
     @Column({name: 'user_id', nullable: true})
     userId?: string;
 
