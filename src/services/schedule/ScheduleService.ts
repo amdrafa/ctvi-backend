@@ -50,10 +50,10 @@ export class ScheduleService implements IScheduleService{
         
         await schedules.forEach(async (schedule: ScheduleModel) => {
             
-            let IsScheduleAvaiable = await this.scheduleRepository.verifyIfScheduleExistsByDateByInicialDate(schedule.startDate, schedule.finalDate)
-            console.log(IsScheduleAvaiable)
-            if(IsScheduleAvaiable){
-                schedule.status = StatusEnum.PreApproved
+            let IsScheduleAvailable = await this.scheduleRepository.verifyIfScheduleExistsByDateByInicialDate(schedule.startDate, schedule.finalDate)
+            console.log(IsScheduleAvailable)
+            if(IsScheduleAvailable){
+                schedule.status = StatusEnum.Pending
             }else{
                 schedule.status = StatusEnum.NotAvailable
             }
@@ -100,7 +100,7 @@ export class ScheduleService implements IScheduleService{
 
     async approveSchedule(request: Request): Promise<ScheduleModel> {
         let schedule = await this.scheduleRepository.getScheduleById(Number(request.params.id))
-        if(schedule && schedule.status == StatusEnum.PreApproved){
+        if(schedule && schedule.status == StatusEnum.Pending){
             schedule.status = StatusEnum.Approved
             return this.scheduleRepository.create(schedule)
         }

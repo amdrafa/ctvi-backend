@@ -1,9 +1,9 @@
 export enum StatusEnum {
-    PreApproved=  "Pre-approved",
+    Pending=  "Pending",
     Approved = "Approved", 
     Rejected = "Rejected",
     NotAvailable = "NotAvailable",
     ExcludedByUser = "Excluded by user",
-    ExcludedByAdmin = "Excluded by admin"
+    RejectedByAdmin = "Rejected by admin"
 
 }

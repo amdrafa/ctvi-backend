@@ -111,7 +111,7 @@ export class BookingService implements IBookingService {
         let booking = await this.bookingRepository.getById(Number(resquest.params.id))
         booking.status = StatusEnum.Approved
         booking.schedules.map((schedule)=>{
-            if(schedule.status == StatusEnum.PreApproved){
+            if(schedule.status == StatusEnum.Pending){
                 schedule.status = StatusEnum.Approved
             }
         })
