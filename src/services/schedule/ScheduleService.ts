@@ -2,6 +2,7 @@ import { Request } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
 import moment from "moment";
 import { ParsedQs } from "qs";
+import { UpdateResult } from "typeorm";
 import { StatusEnum } from "../../enums/statusEnumerator";
 import { BookingModel } from "../../model/BookingModel";
 import { ScheduleModel } from "../../model/ScheduleModel";
@@ -20,6 +21,12 @@ export class ScheduleService implements IScheduleService{
     async listByBookingId(bookingId: number): Promise<ScheduleModel[]> {
 
         return await this.scheduleRepository.getAllSchedulesByBookingId(bookingId);
+
+    }
+
+    async update(request: Request): Promise<UpdateResult> {
+
+        return await this.scheduleRepository.updateSchedule(request.body);
 
     }
 
@@ -97,6 +104,13 @@ export class ScheduleService implements IScheduleService{
             schedule.status = StatusEnum.Approved
             return this.scheduleRepository.create(schedule)
         }
+        
+    }
+
+    async delete(id: Number): Promise<UpdateResult> {
+    
+    return this.scheduleRepository.delete(id)
+        
         
     }
 }

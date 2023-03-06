@@ -60,7 +60,7 @@ bookingRoutes.post("/create/schedules", async (req, resp) => {
     return resp.status(201).json(createBooking);
 })
 
-bookingRoutes.put("/update/:id",async (req, res) => {
+bookingRoutes.put("/update",async (req, res) => {
     return res.status(200).json(bookingService.updateBooking(req))
 })
 
