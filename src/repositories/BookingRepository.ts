@@ -38,4 +38,8 @@ export class BookingRepository{
         return await this.repository.createQueryBuilder().update(BookingModel).set(booking).where('id=:id', {id: booking.id}).execute()
     }
 
+    public async listByUserId(id: number): Promise<BookingModel[]>{
+        return await this.repository.find({where:{userId: id}})
+    }
+
 }

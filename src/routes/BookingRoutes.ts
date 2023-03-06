@@ -85,3 +85,12 @@ bookingRoutes.post("/aprove/:id",async (req, res) => {
     return res.status(200).json(bookingService.approveBooking(req))
 })
 
+bookingRoutes.get("/user/:id",async (req, res) =>{
+    const booking = await bookingService.listByUserId(req)
+
+    if(booking){
+        return res.status(200).json(booking)
+    }
+    return res.status(200).json({message: 'Something went wrong'})
+})
+

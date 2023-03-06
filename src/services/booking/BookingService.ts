@@ -117,5 +117,9 @@ export class BookingService implements IBookingService {
         })
         return await this.bookingRepository.createBookingWithSchedules(booking)
     }
+
+    async listByUserId(request: Request): Promise<BookingModel[]> {
+        return await this.bookingRepository.listByUserId(Number(request.params.id))
+    }
     
 }
