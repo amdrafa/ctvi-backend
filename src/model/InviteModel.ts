@@ -1,20 +1,19 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { CertificateEnum } from '../enums/certificateEnumerator';
 
-@Entity("certificate")
-export class CertificateModel{
+@Entity("invite")
+export class InviteModel{
 
     @PrimaryGeneratedColumn()
     id?: number;
 
-    @Column({name: 'certificate_name'})
-    certificateName: string;
+    @Column({name: 'user_id', nullable: true})
+    userId?: string;
 
-    @Column({name: 'certificate_code'})
-    certificateCode: string;
+    @Column({name: 'guest_name'})
+    guestName: string;
 
-    @Column({name: "certificate_type",type: "enum", enum: CertificateEnum})
-    certificateType: CertificateEnum
+    @Column({name: 'guest_email'})
+    guestEmail: string;
 
     @CreateDateColumn({ name: 'created_at'})
     createdAt: Date;

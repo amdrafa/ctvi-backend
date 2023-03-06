@@ -1,5 +1,5 @@
 import { TermsModel } from './TermsModel';
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn, ManyToMany, JoinTable } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, ManyToMany, JoinTable } from "typeorm";
 import { StatusEnum } from "../enums/statusEnumerator";
 import { ScheduleModel } from "./ScheduleModel";
 

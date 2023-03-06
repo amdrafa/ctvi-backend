@@ -3,7 +3,7 @@ import { RolesEnum } from "../enums/roleEnumerator";
 import { CertificateModel } from "./CertificateModel";
 import { CompanyModel } from "./CompanyModel";
 
-@Entity("user")
+@Entity("ctvi_users")
 export class UserModel {
     @PrimaryGeneratedColumn()
     id?: number;

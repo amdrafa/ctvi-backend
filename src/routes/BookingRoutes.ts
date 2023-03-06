@@ -1,8 +1,6 @@
 import { Router } from 'express';
 import { UpdateResult } from 'typeorm';
-import { ScheduleRepository } from '../repositories/ScheduleRepository';
 import { BookingService } from '../services/booking/BookingService';
-import { ScheduleService } from '../services/schedule/ScheduleService';
 
 export const bookingRoutes = Router();
 
