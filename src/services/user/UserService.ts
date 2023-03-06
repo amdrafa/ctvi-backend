@@ -6,9 +6,10 @@ import bcrypt from 'bcrypt'
 import { CompanyService } from "../company/CompanyService";
 import { CompanyModel } from "../../model/CompanyModel";
 import { RolesEnum } from "../../enums/roleEnumerator";
+import { CertificateService } from "../certificate/CertificateService";
+import { CertificateModel } from "../../model/CertificateModel";
 
 export class UserService implements IUserService  {
-
     private userRepository = new UserRepository();
     
     async list(): Promise<UserModel[]> {
@@ -18,6 +19,10 @@ export class UserService implements IUserService  {
 
     listById(id: number): Promise<UserModel> {
         return this.userRepository.getUserById(id);
+    }
+
+    listCertificates(id: number): Promise<UserModel> {
+        return this.userRepository.getUserByIdWithCertificates(id);
     }
 
     async create(request: Request): Promise<UserModel> {
@@ -116,6 +121,19 @@ export class UserService implements IUserService  {
         const isUserUpdateSuccessful  = await this.userRepository.updateUser(updatedUser)
 
         return isUserUpdateSuccessful ? true : false;
+    }
+
+    async updateCertificates(req: Request, userId: number, certificateId: number): Promise<UserModel> {
+        let user = new UserModel();
+        let certificateService = new CertificateService();
+        let certificate = new CertificateModel();
+
+        certificate = await certificateService.listByIdNumber(certificateId)
+        user = await this.listCertificates(userId);
+        user.certificates.push(certificate);
+
+        this.userRepository.updateUserWithRelations(user);
+        return null
     }
 
 }

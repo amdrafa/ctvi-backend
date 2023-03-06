@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne,  } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, ManyToMany, JoinTable,  } from "typeorm";
 import { RolesEnum } from "../enums/roleEnumerator";
+import { CertificateModel } from "./CertificateModel";
 import { CompanyModel } from "./CompanyModel";
 
 @Entity("user")
@@ -39,4 +40,8 @@ export class UserModel {
 
     @ManyToOne(() => CompanyModel, company => company.users)
     public company: CompanyModel;
+
+    @ManyToMany(() => CertificateModel)
+    @JoinTable()
+    certificates: CertificateModel[]
 }

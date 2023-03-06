@@ -14,7 +14,7 @@ export class CertificateModel{
     @Column({name: 'certificate_code'})
     certificateCode: string;
 
-    @Column({type: "enum", enum: CertificateEnum})
+    @Column({name: "certificate_type",type: "enum", enum: CertificateEnum})
     certificateType: CertificateEnum
 
     @CreateDateColumn({ name: 'created_at'})
@@ -26,7 +26,4 @@ export class CertificateModel{
     @UpdateDateColumn({ name: 'updated_at' })
     updatedAt: Date;
 
-    @ManyToMany(() => UserModel)
-    @JoinTable()
-    terms: UserModel[]
 }
