@@ -21,11 +21,15 @@ export class UserService implements IUserService  {
         return this.userRepository.getUserById(id);
     }
 
+<<<<<<< Updated upstream
     listCertificates(id: number): Promise<UserModel> {
         return this.userRepository.getUserByIdWithCertificates(id);
     }
 
     async create(request: Request): Promise<UserModel> {
+=======
+    create(request: Request): Promise<UserModel> {
+>>>>>>> Stashed changes
 
         try {
 
@@ -37,12 +41,35 @@ export class UserService implements IUserService  {
             user.isForeigner = request.body.isForeigner;
             user.roles = request.body.roles;
 
+<<<<<<< Updated upstream
             let existUser = await this.userRepository.getUserByEmail(user.email)
             console.log( existUser)
             if(!existUser){
                 return this.userRepository.createUser(user)
             }
             return null;
+=======
+            
+                user.name = request.body.name;
+                user.password = request.body.password;
+                user.email = request.body.email;
+                user.document = request.body.document;
+                user.isForeigner = request.body.isForeigner;
+                user.roles = request.body.roles;
+            
+
+            bcrypt.hash(user.password, 10, function(err, hash){
+
+                if(err){
+                    throw new Error("Error when encrypting password");
+                }
+        
+                user.password = hash;
+           
+            })
+
+            return this.userRepository.createUser(user)
+>>>>>>> Stashed changes
             
         } catch (error) {
             return null;
