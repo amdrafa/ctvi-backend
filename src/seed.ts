@@ -19,7 +19,9 @@ const querys = [
     "INSERT INTO public.terms( title, text, created_at, updated_at) VALUES ('Autonomous vehicle / vehicle with steering machine', 'Note: If driving tests with autonomous driving systems are carried out in normal operation, an operator who can take control of the vehicle at any time must be employed. If this is not possible, the tests must be carried out in exclusive operation.', NOW()::DATE, NOW()::DATE);",
     "INSERT INTO public.terms( title, text, created_at, updated_at) VALUES ('Event', 'Please give us a short description of your planned event. We might get in contact with you directly to ask you for more details.  ', NOW()::DATE, NOW()::DATE);",
     //query de insert inicial dos recursos
-    "INSERT INTO public.resource(name, type, is_active, created_at, update_at) VALUES ('nome teste', 'Test track', true, NOW()::DATE, NOW()::DATE);",
+    "INSERT INTO public.resource(name, type, is_active, created_at, update_at) VALUES ('nome track', 'Test track', true, NOW()::DATE, NOW()::DATE);",
+    "INSERT INTO public.resource(name, type, is_active, created_at, update_at) VALUES ('nome Office', 'Office', true, NOW()::DATE, NOW()::DATE);",
+    "INSERT INTO public.resource(name, type, is_active, created_at, update_at) VALUES ('nome Workshop', 'Workshop', true, NOW()::DATE, NOW()::DATE);",
     //query de insert inicial dos certificados
     "INSERT INTO public.certificate(certificate_name, certificate_code, certificate_type, created_at, updated_at) VALUES ('teste', '', 'Upload', NOW()::DATE, NOW()::DATE);"
 ]
