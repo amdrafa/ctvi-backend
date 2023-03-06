@@ -21,15 +21,7 @@ export class UserService implements IUserService  {
         return this.userRepository.getUserById(id);
     }
 
-<<<<<<< Updated upstream
-    listCertificates(id: number): Promise<UserModel> {
-        return this.userRepository.getUserByIdWithCertificates(id);
-    }
-
-    async create(request: Request): Promise<UserModel> {
-=======
     create(request: Request): Promise<UserModel> {
->>>>>>> Stashed changes
 
         try {
 
@@ -41,14 +33,6 @@ export class UserService implements IUserService  {
             user.isForeigner = request.body.isForeigner;
             user.roles = request.body.roles;
 
-<<<<<<< Updated upstream
-            let existUser = await this.userRepository.getUserByEmail(user.email)
-            console.log( existUser)
-            if(!existUser){
-                return this.userRepository.createUser(user)
-            }
-            return null;
-=======
             
                 user.name = request.body.name;
                 user.password = request.body.password;
@@ -69,7 +53,6 @@ export class UserService implements IUserService  {
             })
 
             return this.userRepository.createUser(user)
->>>>>>> Stashed changes
             
         } catch (error) {
             return null;
@@ -161,6 +144,10 @@ export class UserService implements IUserService  {
 
         this.userRepository.updateUserWithRelations(user);
         return null
+    }
+
+    async listCertificates(userId: number): Promise<UserModel> {
+        return await this.userRepository.getUserByIdWithCertificates(userId)
     }
 
 }
