@@ -94,3 +94,15 @@ bookingRoutes.get("/user/:id",async (req, res) =>{
     return res.status(200).json({message: 'Something went wrong'})
 })
 
+bookingRoutes.put("/update/schedules", async (req, resp) => {
+
+    const createBooking = await bookingService.updateWithSchedules(req);
+
+    if(!createBooking){
+        return resp.status(200).json({message: "No data found"});
+    }
+    return resp.status(201).json(createBooking);
+})
+
+
+

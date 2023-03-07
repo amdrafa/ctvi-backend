@@ -3,7 +3,7 @@ export enum StatusEnum {
     Approved = "Approved", 
     Rejected = "Rejected",
     NotAvailable = "NotAvailable",
-    ExcludedByUser = "Excluded by user",
+    RejectedByUser = "Excluded by user",
     RejectedByAdmin = "Rejected by admin"
 
 }
