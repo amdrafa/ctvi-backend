@@ -2,6 +2,8 @@ import { ValidateToken } from './../middlewares/ValidateToken';
 import { response, Router } from 'express';
 import { UserService } from '../services/user/UserService';
 import jwt from 'jsonwebtoken';
+import multer from 'multer';
+import { error } from 'console';
 
 export const userRoutes = Router();
 
@@ -30,7 +32,7 @@ userRoutes.post("/login", async (request, response) => {
     }
 
 
-    const token = jwt.sign({ id: user?.id, name: user?.name, roles: user?.roles, email: user?.email}, "ctvi-secret", { expiresIn: "8h" })
+    const token = jwt.sign({ id: user?.id, name: user?.name, roles: user?.roles, email: user?.email, isForeigner: user?.isForeigner}, "ctvi-secret", { expiresIn: "8h" })
 
     return response.status(200).json({user, token});
 })
@@ -92,6 +94,51 @@ userRoutes.post("/:userId/bindcompany/:companyId", async (request, response) => 
 
 })
 
+/*** 
+ * 
+ * UPLOAD FILE COM MULTER
+ * 
+*/
+// Configuração de armazenamento
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+        // Extração da extensão do arquivo original:
+        const extensaoArquivo = file.originalname.split('.')[1];
+        const conditions = ["png", "jpg", "jpeg"];
+        if(!conditions.includes(extensaoArquivo)){
+            throw error
+        }
+        // Cria um código randômico que será o nome do arquivo
+        const novoNomeArquivo = "user_id_"+req.params.userId +"_certificate_id_"+ req.params.certificateId
+        /*require('crypto')
+            .randomBytes(64)
+            .toString('hex');*/
+
+        // Indica o novo nome do arquivo:
+        cb(null, `${novoNomeArquivo}.${extensaoArquivo}`)
+    }
+});
+
+const upload = multer({ storage, dest: 'uploads/'});
+
+userRoutes.post('/:userId/upload/:certificateId', upload.single('certificate'), (req, res) => {
+    const { nome, site } = req.body;
+    const { userId, certificateId } = req.params;
+    const userService = new UserService()
+    userService.updateCertificates(req, Number(userId), Number(certificateId))
+    res.json({ nome, site });
+});
 
 
 
+userRoutes.post("/:userId/approve/:certificateId", async (req, res) => {
+
+    const { userId, certificateId } = req.params;
+    const userService = new UserService()
+    let isUserUpdated = await userService.updateCertificates(req, Number(userId), Number(certificateId))
+    return res.json(isUserUpdated);
+
+})

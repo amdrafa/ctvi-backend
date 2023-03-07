@@ -1,7 +1,7 @@
 import { TypeORMDataSource } from './../config/DataSourceConnection';
 import { UpdateResult } from 'typeorm';
 import { CompanyModel } from './../model/CompanyModel';
-import { Request } from 'express';
+
 export class CompanyRepository{
 
     repository = TypeORMDataSource.getRepository(CompanyModel)

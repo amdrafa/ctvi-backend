@@ -1,11 +1,13 @@
-import { BookingModel } from './BookingModel';
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity("terms")
 export class TermsModel{
 
     @PrimaryGeneratedColumn()
     id: number
+
+    @Column({type:"text", nullable: true})
+    title: string
 
     @Column({type:"text"})
     text: string

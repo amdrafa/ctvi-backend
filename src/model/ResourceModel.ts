@@ -1,6 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { ResourceType } from "../enums/ResourceType";
-import { ScheduleModel } from "./ScheduleModel";
 
 @Entity("resource")
 export class ResourceModel{
@@ -17,7 +16,7 @@ export class ResourceModel{
     })
     type: ResourceType;
 
-    @Column()
+    @Column({nullable: true})
     capacity: number;
 
     @Column({name: 'is_active', type:'boolean'})

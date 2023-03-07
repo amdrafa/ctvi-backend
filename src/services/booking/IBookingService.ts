@@ -15,4 +15,5 @@ export interface IBookingService{
     deleteById(id: number): Promise<UpdateResult>;
     deleteByBookingId(bookingId: string): Promise<UpdateResult>
     approveBooking(request: Request): Promise<BookingModel>
+    listByUserId(request: Request): Promise<BookingModel[]>
 }

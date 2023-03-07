@@ -1,3 +1,4 @@
+import { UpdateResult } from 'typeorm';
 import { TypeORMDataSource } from '../config/DataSourceConnection';
 import { ScheduleModel } from './../model/ScheduleModel';
 
@@ -20,7 +21,16 @@ export class ScheduleRepository{
 
     public async verifyIfScheduleExistsByDateByInicialDate(startDate: Date, finalDate: Date): Promise<boolean>{
         const schedule = await this.repository.findOneBy({startDate:startDate, finalDate: finalDate, isExclusive: true})
+        console.log(schedule)
         return schedule ? false : true;
+    }
+
+    public async updateSchedule(schedule: ScheduleModel): Promise<UpdateResult>{
+        return await this.repository.update({id: schedule.id}, {...schedule})
+    }
+
+    public async delete(id): Promise<UpdateResult>{
+        return await this.repository.softDelete(id)
     }
     
 

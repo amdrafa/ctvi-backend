@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { BookingService } from '../services/booking/BookingService';
 import { ScheduleService } from '../services/schedule/ScheduleService';
 
 
@@ -29,6 +28,14 @@ scheduleRoutes.get("/list/:id", (request, response) => {
 
 scheduleRoutes.post("/approve/:id", async (req, res)=>{
     return res.status(200).json(await scheduleService.approveSchedule(req))
+})
+
+scheduleRoutes.post("/update", async (req, res)=>{
+    return res.status(200).json(await scheduleService.update(req))
+})
+
+scheduleRoutes.post("/delete/:id", async (req, res)=>{
+    return res.status(200).json(await scheduleService.delete(Number(req.params.id)))
 })
 
 

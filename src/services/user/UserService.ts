@@ -2,13 +2,12 @@ import { Request } from "express";
 import { UserModel } from "../../model/UserModel";
 import { UserRepository } from "../../repositories/UserRepository";
 import { IUserService } from "./IUserService";
-import bcrypt from 'bcrypt'
+//import bcrypt from 'bcrypt'
 import { CompanyService } from "../company/CompanyService";
-import { CompanyModel } from "../../model/CompanyModel";
-import { RolesEnum } from "../../enums/roleEnumerator";
+import { CertificateService } from "../certificate/CertificateService";
+import { CertificateModel } from "../../model/CertificateModel";
 
 export class UserService implements IUserService  {
-
     private userRepository = new UserRepository();
     
     async list(): Promise<UserModel[]> {
@@ -20,22 +19,28 @@ export class UserService implements IUserService  {
         return this.userRepository.getUserById(id);
     }
 
-    async create(request: Request): Promise<UserModel> {
+    create(request: Request): Promise<UserModel> {
 
         try {
 
             const user = new UserModel();
+            user.name = request.body.name;
+            user.password = request.body.password;
+            user.email = request.body.email;
+            user.document = request.body.document;
+            user.isForeigner = request.body.isForeigner;
+            user.roles = request.body.roles;
 
-                console.log(request.body)
+            /*bcrypt.hash(user.password, 10, function(err, hash){
 
-            
-                user.name = request.body.name;
-                user.password = request.body.password;
-                user.email = request.body.email;
-                user.document = request.body.document;
-                user.isForeigner = request.body.isForeigner;
-                user.roles = request.body.roles;
-            
+                if(err){
+                    throw new Error("Error when encrypting password");
+                }
+        
+                user.password = hash;
+           
+            })*/
+
             return this.userRepository.createUser(user)
             
         } catch (error) {
@@ -49,7 +54,6 @@ export class UserService implements IUserService  {
     update(request: Request): Promise<UserModel> {
 
         const user = new UserModel();
-
         
             user.id = request.body.id;
             user.companyId = request.body.companyId;
@@ -116,6 +120,23 @@ export class UserService implements IUserService  {
         const isUserUpdateSuccessful  = await this.userRepository.updateUser(updatedUser)
 
         return isUserUpdateSuccessful ? true : false;
+    }
+
+    async updateCertificates(req: Request, userId: number, certificateId: number): Promise<UserModel> {
+        let user = new UserModel();
+        let certificateService = new CertificateService();
+        let certificate = new CertificateModel();
+
+        certificate = await certificateService.listByIdNumber(certificateId)
+        user = await this.listCertificates(userId);
+        user.certificates.push(certificate);
+
+        this.userRepository.updateUserWithRelations(user);
+        return null
+    }
+
+    async listCertificates(userId: number): Promise<UserModel> {
+        return await this.userRepository.getUserByIdWithCertificates(userId)
     }
 
 }

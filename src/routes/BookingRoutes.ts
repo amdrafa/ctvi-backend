@@ -1,8 +1,6 @@
 import { Router } from 'express';
 import { UpdateResult } from 'typeorm';
-import { ScheduleRepository } from '../repositories/ScheduleRepository';
 import { BookingService } from '../services/booking/BookingService';
-import { ScheduleService } from '../services/schedule/ScheduleService';
 
 export const bookingRoutes = Router();
 
@@ -60,7 +58,7 @@ bookingRoutes.post("/create/schedules", async (req, resp) => {
     return resp.status(201).json(createBooking);
 })
 
-bookingRoutes.put("/update/:id",async (req, res) => {
+bookingRoutes.put("/update",async (req, res) => {
     return res.status(200).json(bookingService.updateBooking(req))
 })
 
@@ -86,4 +84,25 @@ bookingRoutes.delete("/delete/bookingId/:id", async (req, resp) =>{
 bookingRoutes.post("/aprove/:id",async (req, res) => {
     return res.status(200).json(bookingService.approveBooking(req))
 })
+
+bookingRoutes.get("/user/:id",async (req, res) =>{
+    const booking = await bookingService.listByUserId(req)
+
+    if(booking){
+        return res.status(200).json(booking)
+    }
+    return res.status(200).json({message: 'Something went wrong'})
+})
+
+bookingRoutes.put("/update/schedules", async (req, resp) => {
+
+    const createBooking = await bookingService.updateWithSchedules(req);
+
+    if(!createBooking){
+        return resp.status(200).json({message: "No data found"});
+    }
+    return resp.status(201).json(createBooking);
+})
+
+
 

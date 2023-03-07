@@ -1,11 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne,  } from "typeorm";
+import { randomUUID } from "crypto";
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, ManyToMany, JoinTable, Generated,  } from "typeorm";
 import { RolesEnum } from "../enums/roleEnumerator";
+import { CertificateModel } from "./CertificateModel";
 import { CompanyModel } from "./CompanyModel";
 
-@Entity("user")
+@Entity("ctvi_users")
 export class UserModel {
     @PrimaryGeneratedColumn()
     id?: number;
+
+    @Column()
+    @Generated('uuid')
+    uuid: string
     
     @Column()
     name: string;
@@ -39,4 +45,8 @@ export class UserModel {
 
     @ManyToOne(() => CompanyModel, company => company.users)
     public company: CompanyModel;
+
+    @ManyToMany(() => CertificateModel)
+    @JoinTable()
+    certificates: CertificateModel[]
 }

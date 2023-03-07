@@ -1,4 +1,3 @@
-import { Repository } from "typeorm"
 import { TypeORMDataSource } from "../config/DataSourceConnection"
 import { UserModel } from "../model/UserModel"
 
@@ -14,6 +13,10 @@ export class UserRepository{
         return await this.repository.findOneBy({id: id})
     }
 
+    public async getUserByIdWithCertificates(id: number): Promise<UserModel> {
+        return await this.repository.findOne({where:{id: id}, relations:{certificates:true}});
+    }
+
     public async createUser(user: UserModel): Promise<UserModel> {
         return await this.repository.save(user)
     }
@@ -24,7 +27,7 @@ export class UserRepository{
             throw new Error('User not found')
         }
 
-        const updatedUser = await this.repository.update({id: currentUser.id}, user)
+        const updatedUser = await this.repository.update({id: user.id}, user)
 
         if(!updatedUser){
             throw new Error("Error when updating user")
@@ -39,9 +42,15 @@ export class UserRepository{
     
     }
 
+    public async getUserByEmail(email: string): Promise<UserModel> {
+        return await this.repository.findOneBy({email: email})
+    } 
+
     public async getUserByEmailAndPassword(email: string, password: string): Promise<UserModel> {
         return await this.repository.findOneBy({email: email, password: password})
     } 
-    
 
+    public async updateUserWithRelations(user: UserModel): Promise<UserModel>{
+        return await this.repository.save(user);
+    }
 }

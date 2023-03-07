@@ -11,6 +11,7 @@ import { Converter } from "../../utils/Converter";
 import { UpdateResult } from "typeorm";
 import { ParamsDictionary } from 'express-serve-static-core';
 import { ParsedQs } from 'qs';
+import { UserService } from '../user/UserService';
 
 export class BookingService implements IBookingService {
     
@@ -49,9 +50,24 @@ export class BookingService implements IBookingService {
     async createWithSchedules(request: Request) : Promise<BookingModel> {
         let scheduleService = new ScheduleService()
         let booking = new BookingModel()
-        booking = await this.bookingRepository.createBookingWithSchedules(request.body.booking)
-        await scheduleService.createWithArray(request.body.scheduleArray, booking)
-        return booking
+
+        try {
+
+            let userService = new UserService()
+            let userFound = await userService.listById(request.body.booking.userId)
+
+            if(userFound){
+                console.log("User found")
+                booking = await this.bookingRepository.createBookingWithSchedules(request.body.booking)
+                await scheduleService.createWithArray(request.body.scheduleArray, booking)
+                return booking
+            }
+
+            return null
+        } catch (error) {
+            return error
+        }
+
     }
 
     async updateBooking(request: Request): Promise<UpdateResult> {
@@ -95,11 +111,44 @@ export class BookingService implements IBookingService {
         let booking = await this.bookingRepository.getById(Number(resquest.params.id))
         booking.status = StatusEnum.Approved
         booking.schedules.map((schedule)=>{
-            if(schedule.status == StatusEnum.PreApproved){
+            if(schedule.status == StatusEnum.Pending){
                 schedule.status = StatusEnum.Approved
             }
         })
         return await this.bookingRepository.createBookingWithSchedules(booking)
+    }
+
+    async listByUserId(request: Request): Promise<BookingModel[]> {
+        return await this.bookingRepository.listByUserId(Number(request.params.id))
+    }
+
+    async updateWithSchedules(request: Request) : Promise<BookingModel> {
+        let booking = new BookingModel()
+
+        try {
+
+            let userService = new UserService()
+            let userFound = await userService.listById(request.body.booking.userId)
+
+            if(userFound){
+                let schedulesFinded = await this.listSchedulesByBookingID(Number(request.body.booking.id))
+                if(!schedulesFinded){
+                    throw new Error('schedules not founded')
+                }
+                if(schedulesFinded.schedules.length != request.body.scheduleArray.length){
+                    throw new Error('schedules not enough')
+                }
+                booking = request.body.booking
+                booking.schedules = request.body.scheduleArray
+                await this.bookingRepository.updateWithSchedules(booking)
+                return booking
+            }
+
+            return null
+        } catch (error) {
+            return error
+        }
+
     }
     
 }

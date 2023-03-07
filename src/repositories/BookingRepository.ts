@@ -1,5 +1,4 @@
-import { ScheduleModel } from './../model/ScheduleModel';
-import { createQueryBuilder, QueryBuilder, UpdateResult } from "typeorm";
+import { UpdateResult } from "typeorm";
 import { TypeORMDataSource } from "../config/DataSourceConnection";
 import { BookingModel } from "../model/BookingModel";
 
@@ -36,8 +35,15 @@ export class BookingRepository{
     }   
 
     public async updateBooking(booking: BookingModel): Promise<UpdateResult>{
-            // return await this.repository.update({id: booking.id}, {...booking})
-            return await this.repository.createQueryBuilder().update(BookingModel).set(booking).where('id=:id', {id: booking.id}).execute()
+        return await this.repository.createQueryBuilder().update(BookingModel).set(booking).where('id=:id', {id: booking.id}).execute()
+    }
+
+    public async updateWithSchedules(booking: BookingModel): Promise<BookingModel>{
+        return await this.repository.save(booking)
+    }
+
+    public async listByUserId(id: number): Promise<BookingModel[]>{
+        return await this.repository.find({where:{userId: id}})
     }
 
 }

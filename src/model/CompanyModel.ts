@@ -1,4 +1,3 @@
-import { StatusEnum } from './../enums/statusEnumerator';
 import { CreateDateColumn, DeleteDateColumn, Entity, OneToMany, UpdateDateColumn } from 'typeorm';
 import { Column, PrimaryGeneratedColumn } from 'typeorm';
 import { UserModel } from './UserModel';

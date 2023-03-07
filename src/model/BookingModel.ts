@@ -1,5 +1,5 @@
 import { TermsModel } from './TermsModel';
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn, ManyToMany, JoinTable } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, ManyToMany, JoinTable } from "typeorm";
 import { StatusEnum } from "../enums/statusEnumerator";
 import { ScheduleModel } from "./ScheduleModel";
 
@@ -21,7 +21,7 @@ export class BookingModel{
     @Column({type: "timestamp"})
     dataFinal: Date;
 
-    @Column({type: "enum", enum: StatusEnum})
+    @Column({type: "enum", enum: StatusEnum, nullable: true})
     status: StatusEnum;
 
     @CreateDateColumn({ name: 'created_at'})
