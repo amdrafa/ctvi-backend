@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, ManyToMany, JoinTable,  } from "typeorm";
+import { randomUUID } from "crypto";
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, ManyToMany, JoinTable, Generated,  } from "typeorm";
 import { RolesEnum } from "../enums/roleEnumerator";
 import { CertificateModel } from "./CertificateModel";
 import { CompanyModel } from "./CompanyModel";
@@ -7,6 +8,10 @@ import { CompanyModel } from "./CompanyModel";
 export class UserModel {
     @PrimaryGeneratedColumn()
     id?: number;
+
+    @Column()
+    @Generated('uuid')
+    uuid: string
     
     @Column()
     name: string;
