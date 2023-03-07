@@ -150,5 +150,9 @@ export class BookingService implements IBookingService {
         }
 
     }
+
+    async listByStatus(resquest: Request): Promise<BookingModel[]>{
+        return await this.bookingRepository.listByStatus(resquest.params.status as StatusEnum)
+    }
     
 }

@@ -104,5 +104,14 @@ bookingRoutes.put("/update/schedules", async (req, resp) => {
     return resp.status(201).json(createBooking);
 })
 
+bookingRoutes.get('/list/status/:status', async (req, res)=>{
+    const bookings = await bookingService.listByStatus(req);
+
+    if(!bookings){
+        return res.status(200).json({message: "No data found"});
+    }
+    return res.status(201).json(bookings);
+})
+
 
 

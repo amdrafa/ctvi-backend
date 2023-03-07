@@ -1,3 +1,4 @@
+import { StatusEnum } from './../enums/statusEnumerator';
 import { UpdateResult } from "typeorm";
 import { TypeORMDataSource } from "../config/DataSourceConnection";
 import { BookingModel } from "../model/BookingModel";
@@ -44,6 +45,10 @@ export class BookingRepository{
 
     public async listByUserId(id: number): Promise<BookingModel[]>{
         return await this.repository.find({where:{userId: id}})
+    }
+
+    public async listByStatus(status: StatusEnum): Promise<BookingModel[]>{
+        return await this.repository.find({where:{status: status}})
     }
 
 }
