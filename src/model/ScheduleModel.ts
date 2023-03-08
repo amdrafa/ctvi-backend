@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { StatusEnum } from "../enums/statusEnumerator";
 import { BookingModel } from "./BookingModel";
 import { ResourceModel } from "./ResourceModel";
@@ -36,8 +36,8 @@ export class ScheduleModel{
     @ManyToOne(() => BookingModel, booking => booking.schedules)
     public booking: BookingModel;
 
-    @ManyToMany(()=> ResourceModel)
-    @JoinColumn()
+    @ManyToMany(()=> ResourceModel, (resource) => resource.schedules, {cascade:true})
+    @JoinTable()
     resource: ResourceModel[]
 
 }

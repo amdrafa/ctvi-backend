@@ -1,7 +1,8 @@
+import { ResourceRepository } from './../../repositories/ResourceRepository';
+import { ResourceModel } from './../../model/ResourceModel';
+import { ResourceService } from './../resource/ResourceService';
 import { Request } from "express";
-import { ParamsDictionary } from "express-serve-static-core";
 import moment from "moment";
-import { ParsedQs } from "qs";
 import { UpdateResult } from "typeorm";
 import { StatusEnum } from "../../enums/statusEnumerator";
 import { BookingModel } from "../../model/BookingModel";
@@ -38,11 +39,32 @@ export class ScheduleService implements IScheduleService{
     }
 
     async createWithArray(schedules: ScheduleModel[], booking: BookingModel): Promise<ScheduleModel[]> {
-        const newSchedulesArray: ScheduleModel[] = await this.splitArrayInDays(schedules);
+        let  resourceSchedules = await this.splitResources(schedules)
+        const newSchedulesArray: ScheduleModel[] = await this.splitArrayInDays(resourceSchedules);
         newSchedulesArray.map(schedule =>{
             schedule.booking = booking
         })
         return await this.splitSchedules(newSchedulesArray)
+    }
+
+    async splitResources(schedules: ScheduleModel[]): Promise<ScheduleModel[]>{
+        let resourceSchedules : ScheduleModel[] = []
+        let obj: ResourceModel
+        let resourceService = new ResourceService()
+        await Promise.all(
+            schedules.map(async schedule=>{
+                await Promise.all(
+                    schedule.resource.map(async (item) =>{
+                        obj = await resourceService.listDetail(Number(item))
+                        console.log(obj)
+                        schedule.resource = [obj]
+                        resourceSchedules.push({...schedule})
+                    })
+                )
+            })
+        )
+
+        return resourceSchedules
     }
 
     async splitSchedules(schedules) : Promise<ScheduleModel[]>{
@@ -51,7 +73,6 @@ export class ScheduleService implements IScheduleService{
         await schedules.forEach(async (schedule: ScheduleModel) => {
             
             let IsScheduleAvailable = await this.scheduleRepository.verifyIfScheduleExistsByDateByInicialDate(schedule.startDate, schedule.finalDate)
-            console.log(IsScheduleAvailable)
             if(IsScheduleAvailable){
                 schedule.status = StatusEnum.Pending
             }else{
@@ -64,6 +85,7 @@ export class ScheduleService implements IScheduleService{
 
     async splitArrayInDays(scheduleModel: ScheduleModel[]){
         let schedulesPorDia: ScheduleModel[] = [];
+        const resourceService = new ResourceService()
 
         scheduleModel.forEach(schedule => {
             let dataInicial = moment(schedule.startDate);
@@ -76,6 +98,7 @@ export class ScheduleService implements IScheduleService{
                 let novoSchedule = new ScheduleModel;
                 novoSchedule.status = schedule.status
                 novoSchedule.isExclusive = schedule.isExclusive
+                novoSchedule.resource = schedule.resource
                 if(i==0){
                     //primeiro item
                     novoSchedule.startDate = dataInicial.toDate()
@@ -91,7 +114,6 @@ export class ScheduleService implements IScheduleService{
                         novoSchedule.finalDate = moment(dataDoDia).hour(18).toDate()
                     }
                 }
-
                 schedulesPorDia.push(novoSchedule)
             }
         });

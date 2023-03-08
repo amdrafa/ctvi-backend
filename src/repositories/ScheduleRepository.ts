@@ -16,6 +16,7 @@ export class ScheduleRepository{
     }
 
     public async create(schedule: ScheduleModel): Promise<ScheduleModel>{
+        console.log(schedule)
         return await this.repository.save(schedule);
     }
 
