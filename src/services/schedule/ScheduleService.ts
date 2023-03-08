@@ -56,7 +56,6 @@ export class ScheduleService implements IScheduleService{
                 await Promise.all(
                     schedule.resource.map(async (item) =>{
                         obj = await resourceService.listDetail(Number(item))
-                        console.log(obj)
                         schedule.resource = [obj]
                         resourceSchedules.push({...schedule})
                     })

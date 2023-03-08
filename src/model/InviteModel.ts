@@ -7,10 +7,10 @@ export class InviteModel{
     id?: number;
 
     @Column({name: 'booking_id'})
-    bookingId: string;
+    bookingId: number;
 
     @Column({name: 'user_id', nullable: true})
-    userId?: string;
+    userId?: number;
 
     @Column({name: 'guest_name'})
     guestName: string;

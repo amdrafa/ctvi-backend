@@ -1,3 +1,5 @@
+import { InviteModel } from './../../model/InviteModel';
+import { InviteService } from './../invite/InviteService';
 import { TermsModel } from './../../model/TermsModel';
 import { TermsService } from './../terms/TermsService';
 import { ScheduleModel } from './../../model/ScheduleModel';
@@ -50,6 +52,7 @@ export class BookingService implements IBookingService {
     async createWithSchedules(request: Request) : Promise<BookingModel> {
         let scheduleService = new ScheduleService()
         let booking = new BookingModel()
+        let inviteService = new InviteService()
 
         try {
 
@@ -60,6 +63,12 @@ export class BookingService implements IBookingService {
                 console.log("User found")
                 booking = await this.bookingRepository.createBookingWithSchedules(request.body.booking)
                 await scheduleService.createWithArray(request.body.scheduleArray, booking)
+                await Promise.all(
+                    request.body.inviteArray.map(async (invite: InviteModel)=>{
+                        invite.bookingId = booking.id
+                        await inviteService.createWithObject(invite)
+                    })
+                )
                 return booking
             }
 

@@ -20,6 +20,10 @@ export class InviteService implements IInviteService{
         return await this.inviteRepository.createInvite(request.body)
     }
 
+    async createWithObject(invite: InviteModel): Promise<InviteModel>{
+        return await this.inviteRepository.createInvite(invite)
+    }
+
     async update(request: Request): Promise<UpdateResult>{
         return await this.inviteRepository.updateInvite(request.body) 
     }
