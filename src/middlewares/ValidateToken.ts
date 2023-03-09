@@ -7,7 +7,7 @@ interface JwtPayload {
     id: number;
 }
 
-export const ValidateToken = (req:Request, res: Response, next: NextFunction) => {
+export const ValidateToken = async (req:Request, res: Response, next: NextFunction) => {
 
     const userService = new UserService()
 
@@ -21,10 +21,10 @@ export const ValidateToken = (req:Request, res: Response, next: NextFunction) =>
 
     const { id } = jwt.verify(token, "ctvi-secret") as JwtPayload;
 
-    const user = userService.listById(id);
+    const user = await userService.listById(id);
     
     user.password=''
-    req.user = user
+    req.body.user = user
 
     next();
 }

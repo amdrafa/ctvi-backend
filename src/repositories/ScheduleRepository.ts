@@ -16,13 +16,11 @@ export class ScheduleRepository{
     }
 
     public async create(schedule: ScheduleModel): Promise<ScheduleModel>{
-        console.log(schedule)
         return await this.repository.save(schedule);
     }
 
     public async verifyIfScheduleExistsByDateByInicialDate(startDate: Date, finalDate: Date): Promise<boolean>{
         const schedule = await this.repository.findOneBy({startDate:startDate, finalDate: finalDate, isExclusive: true})
-        console.log(schedule)
         return schedule ? false : true;
     }
 

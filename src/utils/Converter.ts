@@ -4,8 +4,6 @@ export class Converter {
 
         try {
             if(moment(date).isValid()){
-                console.log(date)
-                console.log(new Date())
                 return new Date(date);
             }
         } catch (error) {
