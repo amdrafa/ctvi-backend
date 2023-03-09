@@ -41,7 +41,6 @@ inviteRoutes.put("/update", async (request, response) =>{
 })
 
 inviteRoutes.delete("/delete/:id", async (request, response) =>{
-    console.log(request.params.id)
     const result = await inviteService.delete(Number(request.params.id))
 
     if(!result){

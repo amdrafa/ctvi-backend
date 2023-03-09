@@ -38,7 +38,7 @@ userRoutes.post("/login", async (request, response) => {
 })
 
 
-// userRoutes.use(ValidateToken)
+//userRoutes.use(ValidateToken)
 
 userRoutes.get("/list", async (request, response) => {
     const allUsers = await userService.list();

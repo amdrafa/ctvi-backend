@@ -50,24 +50,25 @@ export class BookingService implements IBookingService {
     }
 
     async createWithSchedules(request: Request) : Promise<BookingModel> {
-        let scheduleService = new ScheduleService()
-        let booking = new BookingModel()
-        let inviteService = new InviteService()
 
         try {
+            let booking = new BookingModel()
+            let scheduleService = new ScheduleService()
+            let inviteService = new InviteService()
 
             let userService = new UserService()
             let userFound = await userService.listById(request.body.booking.userId)
 
             if(userFound){
-                console.log("User found")
-                booking = await this.bookingRepository.createBookingWithSchedules(request.body.booking)
-                await scheduleService.createWithArray(request.body.scheduleArray, booking)
+                await Promise.all(
+                [booking = await this.bookingRepository.createBookingWithSchedules(request.body.booking),
+                await scheduleService.createWithArray(request.body.scheduleArray, booking),
                 await Promise.all(
                     request.body.inviteArray.map(async (invite: InviteModel)=>{
                         invite.bookingId = booking.id
                         await inviteService.createWithObject(invite)
                     })
+                )]
                 )
                 return booking
             }

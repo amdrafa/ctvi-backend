@@ -41,7 +41,6 @@ companyRoutes.put("/update", async (request, response) =>{
 })
 
 companyRoutes.delete("/delete/:id", async (request, response) =>{
-    console.log(request.params.id)
     const result = await companyService.delete(Number(request.params.id))
 
     if(!result){
