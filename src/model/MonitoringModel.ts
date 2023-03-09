@@ -4,8 +4,11 @@ export class MonitoringModel{
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({name:'lincense_plate', nullable:true})
-    lincensePlate?: string
+    @Column({name:'trackerId'})
+    trackerID: string
+
+    @Column({name: 'user_id', nullable:true})
+    userId?: number
 
     @Column({name:'car_nickname', nullable:true})
     carNickname?: string
