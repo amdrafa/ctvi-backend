@@ -1,3 +1,4 @@
+import { VehicleTypeService } from './../vehicleType/VehicleTypeService';
 import { InviteModel } from './../../model/InviteModel';
 import { InviteService } from './../invite/InviteService';
 import { TermsModel } from './../../model/TermsModel';
@@ -14,6 +15,7 @@ import { UpdateResult } from "typeorm";
 import { ParamsDictionary } from 'express-serve-static-core';
 import { ParsedQs } from 'qs';
 import { UserService } from '../user/UserService';
+import { VehicleTypeModel } from '../../model/VehicleTypeModel';
 
 export class BookingService implements IBookingService {
     
@@ -52,16 +54,24 @@ export class BookingService implements IBookingService {
     async createWithSchedules(request: Request) : Promise<BookingModel> {
 
         try {
+            const insertVehicleType = async ()=>{
+                request.body.booking.vehicleType = {...vehicle}
+            }
             let booking = new BookingModel()
             let scheduleService = new ScheduleService()
             let inviteService = new InviteService()
+            let vehicleTypeService = new VehicleTypeService()
+            let vehicle:VehicleTypeModel
 
             let userService = new UserService()
             let userFound = await userService.listById(request.body.booking.userId)
 
             if(userFound){
                 await Promise.all(
-                [booking = await this.bookingRepository.createBookingWithSchedules(request.body.booking),
+                [
+                vehicle = await vehicleTypeService.create(request.body.vehicleType),
+                await insertVehicleType(),
+                booking = await this.bookingRepository.createBookingWithSchedules(request.body.booking),
                 await scheduleService.createWithArray(request.body.scheduleArray, booking),
                 await Promise.all(
                     request.body.inviteArray.map(async (invite: InviteModel)=>{

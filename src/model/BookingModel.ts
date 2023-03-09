@@ -1,5 +1,6 @@
+import { VehicleTypeModel } from './VehicleTypeModel';
 import { TermsModel } from './TermsModel';
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, ManyToMany, JoinTable } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, ManyToMany, JoinTable, OneToOne, JoinColumn } from "typeorm";
 import { StatusEnum } from "../enums/statusEnumerator";
 import { ScheduleModel } from "./ScheduleModel";
 
@@ -14,6 +15,10 @@ export class BookingModel{
 
     @Column()
     userId: number;
+
+    @OneToOne(()=> VehicleTypeModel)
+    @JoinColumn()
+    vehicleType:VehicleTypeModel
 
     @Column({type: "timestamp"})
     dataInicial: Date;
