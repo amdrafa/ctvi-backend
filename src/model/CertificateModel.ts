@@ -10,8 +10,8 @@ export class CertificateModel{
     @Column({name: 'certificate_name'})
     certificateName: string;
 
-    @Column({name: 'certificate_code'})
-    certificateCode: string;
+    @Column({name: 'certificate_code', nullable: true})
+    certificateCode?: string;
 
     @Column({name: "certificate_type",type: "enum", enum: CertificateEnum})
     certificateType: CertificateEnum
