@@ -1,7 +1,6 @@
 import { CertificateService } from './../services/certificate/CertificateService';
 import multer from "multer";
 import { Router } from "express"
-import { error } from 'console';
 
 export const certificateRoutes = Router()
 
@@ -67,7 +66,7 @@ const storage = multer.diskStorage({
         const extensaoArquivo = file.originalname.split('.')[1];
         const conditions = ["png", "jpg", "jpeg"];
         if(!conditions.includes(extensaoArquivo)){
-            throw error
+            throw new Error()
         }
         // Cria um código randômico que será o nome do arquivo
         const novoNomeArquivo = require('crypto')

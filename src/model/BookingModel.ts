@@ -1,3 +1,4 @@
+import { InviteModel } from './InviteModel';
 import { VehicleTypeModel } from './VehicleTypeModel';
 import { TermsModel } from './TermsModel';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn, ManyToMany, JoinTable, OneToOne, JoinColumn } from "typeorm";
@@ -15,6 +16,9 @@ export class BookingModel{
 
     @Column()
     userId: number;
+
+    @OneToMany(()=>InviteModel, invite=>invite.booking)
+    invite:InviteModel
 
     @OneToOne(()=> VehicleTypeModel)
     @JoinColumn()

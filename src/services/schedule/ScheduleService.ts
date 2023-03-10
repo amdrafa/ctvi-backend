@@ -1,4 +1,3 @@
-import { ResourceRepository } from './../../repositories/ResourceRepository';
 import { ResourceModel } from './../../model/ResourceModel';
 import { ResourceService } from './../resource/ResourceService';
 import { Request } from "express";

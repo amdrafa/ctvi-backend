@@ -3,7 +3,6 @@ import { InviteModel } from './../../model/InviteModel';
 import { InviteService } from './../invite/InviteService';
 import { TermsModel } from './../../model/TermsModel';
 import { TermsService } from './../terms/TermsService';
-import { ScheduleModel } from './../../model/ScheduleModel';
 import { BookingModel } from "../../model/BookingModel";
 import { IBookingService } from "./IBookingService";
 import { BookingRepository } from "../../repositories/BookingRepository";
@@ -12,8 +11,6 @@ import { StatusEnum } from "../../enums/statusEnumerator";
 import { Request } from "express";
 import { Converter } from "../../utils/Converter";
 import { UpdateResult } from "typeorm";
-import { ParamsDictionary } from 'express-serve-static-core';
-import { ParsedQs } from 'qs';
 import { UserService } from '../user/UserService';
 import { VehicleTypeModel } from '../../model/VehicleTypeModel';
 
@@ -75,7 +72,7 @@ export class BookingService implements IBookingService {
                 await scheduleService.createWithArray(request.body.scheduleArray, booking),
                 await Promise.all(
                     request.body.inviteArray.map(async (invite: InviteModel)=>{
-                        invite.bookingId = booking.id
+                        invite.booking = booking
                         await inviteService.createWithObject(invite)
                     })
                 )]

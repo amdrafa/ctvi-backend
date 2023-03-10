@@ -1,7 +1,5 @@
 import { EquipmentRepository } from './../../repositories/EquipmentRepository';
 import { Request } from 'express';
-import { ParamsDictionary } from 'express-serve-static-core';
-import { ParsedQs } from 'qs';
 import { UpdateResult } from 'typeorm';
 import { EquipmentModel } from '../../model/EquipmentModel';
 import { IEquipmentService } from './IEquipmentService';

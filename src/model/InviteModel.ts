@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BookingModel } from './BookingModel';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity("invite")
 export class InviteModel{
@@ -6,8 +7,8 @@ export class InviteModel{
     @PrimaryGeneratedColumn()
     id?: number;
 
-    @Column({name: 'booking_id'})
-    bookingId: number;
+    @ManyToOne(()=>BookingModel, booking=>booking.invite)
+    booking: BookingModel;
 
     @Column({name: 'user_id', nullable: true})
     userId?: number;

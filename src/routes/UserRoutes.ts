@@ -1,5 +1,5 @@
 import { ValidateToken } from './../middlewares/ValidateToken';
-import { response, Router } from 'express';
+import { Router } from 'express';
 import { UserService } from '../services/user/UserService';
 import jwt from 'jsonwebtoken';
 import multer from 'multer';

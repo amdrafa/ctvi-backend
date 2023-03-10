@@ -1,4 +1,3 @@
-import { MonitoringModel } from './../model/MonitoringModel';
 import { MonitoringService } from './../services/monitoring/MonitoringService';
 import { Router } from 'express';
 export const monitoringRoute = Router()
