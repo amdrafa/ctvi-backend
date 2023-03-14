@@ -128,8 +128,10 @@ export class UserService implements IUserService  {
         let certificate = new CertificateModel();
 
         certificate = await certificateService.listByIdNumber(certificateId)
+
+        console.log(certificate)
         user = await this.listCertificates(userId);
-        user.certificates.push(certificate);
+        user.certificates.push(certificate.id);
 
         this.userRepository.updateUserWithRelations(user);
         return null
