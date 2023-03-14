@@ -143,7 +143,7 @@ userRoutes.get("/:userId/certificates", async (req, res) => {
     const { userId } = req.params;
     const certificates = await userService.listCertificates(Number(userId))
     if(!certificates){
-        return response.status(200).json({message: "No data found"});
+        return res.status(200).json({message: "No data found"});
     }
-    return response.status(200).json(certificates)
+    return res.status(200).json(certificates)
 })
