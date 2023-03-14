@@ -127,7 +127,6 @@ const upload = multer({ storage, dest: 'uploads/'});
 userRoutes.post('/:userId/upload/:certificateId', upload.single('certificate'), (req, res) => {
     const { nome, site } = req.body;
     const { userId, certificateId } = req.params;
-    const userService = new UserService()
     userService.updateCertificates(req, Number(userId), Number(certificateId))
     res.json({ nome, site });
 });
@@ -135,10 +134,16 @@ userRoutes.post('/:userId/upload/:certificateId', upload.single('certificate'), 
 
 
 userRoutes.post("/:userId/approve/:certificateId", async (req, res) => {
-
     const { userId, certificateId } = req.params;
-    const userService = new UserService()
     let isUserUpdated = await userService.updateCertificates(req, Number(userId), Number(certificateId))
     return res.json(isUserUpdated);
+})
 
+userRoutes.get("/:userId/certificates", async (req, res) => {
+    const { userId } = req.params;
+    const certificates = await userService.listCertificates(Number(userId))
+    if(!certificates){
+        return response.status(200).json({message: "No data found"});
+    }
+    return response.status(200).json(certificates)
 })
