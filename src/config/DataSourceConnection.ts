@@ -17,7 +17,7 @@ export const TypeORMDataSource = new DataSource({
     host: "localhost",
     port: 5432,
     username: "postgres",
-    password: "123456",
+    password: "root",
     database: "ctvi",
     synchronize: true,
     entities: [UserModel, CompanyModel, ResourceModel, BookingModel, ScheduleModel, TermsModel, EquipmentModel, MonitoringModel, CertificateModel, VehicleTypeModel, InviteModel],
