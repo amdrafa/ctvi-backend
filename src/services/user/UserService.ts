@@ -19,7 +19,7 @@ export class UserService implements IUserService  {
         return this.userRepository.getUserById(id);
     }
 
-    create(request: Request): Promise<UserModel> {
+    async create(request: Request): Promise<UserModel> {
 
         try {
 
@@ -31,17 +31,11 @@ export class UserService implements IUserService  {
             user.isForeigner = request.body.isForeigner;
             user.roles = request.body.roles;
 
-            /*bcrypt.hash(user.password, 10, function(err, hash){
+            if(await this.userRepository.getUserByEmail(user.email)){
+                throw new Error('This email is already registered')
+            }
 
-                if(err){
-                    throw new Error("Error when encrypting password");
-                }
-        
-                user.password = hash;
-           
-            })*/
-
-            return this.userRepository.createUser(user)
+            return await this.userRepository.createUser(user)
             
         } catch (error) {
             return null;
@@ -52,19 +46,8 @@ export class UserService implements IUserService  {
     }
 
     update(request: Request): Promise<UserModel> {
-
-        const user = new UserModel();
         
-            user.id = request.body.id;
-            user.companyId = request.body.companyId;
-            user.name = request.body.name;
-            user.password = request.body.password;
-            user.email = request.body.email;
-            user.document = request.body.document;
-            user.isForeigner = request.body.isForeigner;
-        
-        
-        return this.userRepository.updateUser(user);
+        return this.userRepository.updateUser(request.body);
         
     }
 
@@ -99,25 +82,21 @@ export class UserService implements IUserService  {
         return user;
     }
 
-    async bindToCompany(userId: number, companyId: number): Promise<boolean> {
+    async bindToCompany(request: Request): Promise<boolean> {
         
         const companyService = new CompanyService()
 
-        const user = await this.userRepository.getUserById(userId);
+        let user = await this.userRepository.getUserById(Number(request.params.userId));
 
-        const company = await companyService.listDetail(companyId);
+        const company = await companyService.listDetail(Number(request.params.companyId));
 
         if(!user || !company){
             throw new Error("User or company not found")
         }
 
-        let updatedUser = new UserModel();
+        user.company = company
 
-        updatedUser = user;
-
-        updatedUser.companyId = companyId;
-
-        const isUserUpdateSuccessful  = await this.userRepository.updateUser(updatedUser)
+        const isUserUpdateSuccessful  = await this.userRepository.updateUser(user)
 
         return isUserUpdateSuccessful ? true : false;
     }
@@ -131,7 +110,7 @@ export class UserService implements IUserService  {
 
         console.log(certificate)
         user = await this.listCertificates(userId);
-        user.certificates.push(certificate.id);
+        user.certificates.push(certificate);
 
         this.userRepository.updateUserWithRelations(user);
         return null

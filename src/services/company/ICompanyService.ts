@@ -6,6 +6,6 @@ export interface ICompanyService {
     list(): Promise<CompanyModel[]>;
     listDetail(id:number):Promise<CompanyModel>;
     create(request: Request):Promise<CompanyModel>;
-    update(request: Request):Promise<UpdateResult>;
+    update(request: Request):Promise<CompanyModel>;
     delete(id: number): Promise<UpdateResult>;
 }

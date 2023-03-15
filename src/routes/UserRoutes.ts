@@ -9,11 +9,11 @@ export const userRoutes = Router();
 
 const userService = new UserService();
 
-userRoutes.post("/create", (request, response) => {
+userRoutes.post("/create", async (request, response) => {
 
     // FAZER VALIDAÇÃO DE EMAIL. SALVANDO 2 USERS COM O MESMO EMAIL.
     
-    const user = userService.create(request);
+    const user = await userService.create(request);
 
     if(!user){
         return response.status(200).json({message: "It was not possible to create this user."})
@@ -86,9 +86,7 @@ userRoutes.delete("/delete/:id", async (request, response) => {
 
 userRoutes.post("/:userId/bindcompany/:companyId", async (request, response) => {
 
-    const { userId, companyId } = request.params;
-
-    const isUserUpdated = await userService.bindToCompany(Number(userId), Number(companyId))
+    const isUserUpdated = await userService.bindToCompany(request)
 
     return response.json(isUserUpdated);
 

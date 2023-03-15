@@ -47,7 +47,7 @@ export class UserRepository{
     } 
 
     public async getUserByEmailAndPassword(email: string, password: string): Promise<UserModel> {
-        return await this.repository.findOneBy({email: email, password: password})
+        return await this.repository.findOne({where:{email: email, password: password}, relations:{certificates:true}})
     } 
 
     public async updateUserWithRelations(user: UserModel): Promise<UserModel>{

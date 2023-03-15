@@ -17,9 +17,6 @@ export class UserModel {
     @Column()
     password: string;
 
-    @Column({ name: 'company_id', nullable: true })
-    companyId?: number;
-
     @Column()
     document: string;
 

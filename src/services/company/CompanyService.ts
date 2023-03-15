@@ -20,7 +20,7 @@ export class CompanyService implements ICompanyService{
         return await this.companyRepository.createCompany(request.body)
     }
 
-    async update(request: Request): Promise<UpdateResult>{
+    async update(request: Request): Promise<CompanyModel>{
         return await this.companyRepository.updateCompany(request.body) 
     }
 

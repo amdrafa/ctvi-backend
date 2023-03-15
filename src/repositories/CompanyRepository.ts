@@ -18,8 +18,8 @@ export class CompanyRepository{
         return this.repository.save(this.repository.create(company))
     }
 
-    public async updateCompany(company: CompanyModel): Promise<UpdateResult>{
-        return await this.repository.update({id: company.id}, {...company})
+    public async updateCompany(company: CompanyModel): Promise<CompanyModel>{
+        return await this.repository.save(company)
     }
 
     public async deleteCompany(id:number): Promise<UpdateResult>{
