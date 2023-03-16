@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, ManyToMany, JoinTable, Generated,  } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, ManyToMany, JoinTable, Generated, OneToMany,  } from "typeorm";
 import { RolesEnum } from "../enums/roleEnumerator";
 import { CertificateModel } from "./CertificateModel";
 import { CompanyModel } from "./CompanyModel";
+import { UserCertificatesModel } from "./UserCertificatesModel";
 
 @Entity("ctvi_users")
 export class UserModel {
@@ -41,4 +42,7 @@ export class UserModel {
     @ManyToMany(() => CertificateModel)
     @JoinTable()
     certificates: CertificateModel[]
+
+    @OneToMany(()=>UserCertificatesModel, userCertificate=>userCertificate.user)
+    userCertificate: UserCertificatesModel[]
 }

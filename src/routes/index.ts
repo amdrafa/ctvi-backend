@@ -11,7 +11,7 @@ import { userRoutes } from "./UserRoutes";
 import { certificateRoutes } from './CertificateRoute';
 import { inviteRoutes } from './InviteRoutes';
 
-export const router = Router();
+export const router = Router()
 
 router.use("/user", userRoutes);
 //router.use(ValidateToken);

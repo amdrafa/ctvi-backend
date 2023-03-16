@@ -11,6 +11,7 @@ import { UserModel } from "../model/UserModel"
 import { BookingModel } from '../model/BookingModel';
 import { ScheduleModel } from '../model/ScheduleModel';
 import { CertificateModel } from '../model/CertificateModel';
+import { UserCertificatesModel } from '../model/UserCertificatesModel';
 
 export const TypeORMDataSource = new DataSource({
     type: "postgres",
@@ -20,6 +21,6 @@ export const TypeORMDataSource = new DataSource({
     password: "123456",
     database: "ctvi",
     synchronize: true,
-    entities: [UserModel, CompanyModel, ResourceModel, BookingModel, ScheduleModel, TermsModel, EquipmentModel, MonitoringModel, CertificateModel, VehicleTypeModel, InviteModel],
+    entities: [UserModel, CompanyModel, ResourceModel, BookingModel, ScheduleModel, TermsModel, EquipmentModel, MonitoringModel, CertificateModel, VehicleTypeModel, InviteModel, UserCertificatesModel],
     logging: false,
 })

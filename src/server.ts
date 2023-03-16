@@ -3,6 +3,7 @@ import { router } from './routes';
 import "reflect-metadata"
 import { TypeORMDataSource } from './config/DataSourceConnection';
 import cors from 'cors';
+import path from 'path'
 
 TypeORMDataSource.initialize()
     .then(() => {
@@ -11,6 +12,7 @@ TypeORMDataSource.initialize()
     .catch((error) => console.log("Error: " + error))
 
     const app = express();
+    app.use('/', express.static(path.resolve(__dirname, 'uploads')))
     app.use(cors())
     app.use(express.json());
     app.use(router);
