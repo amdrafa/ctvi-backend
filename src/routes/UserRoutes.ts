@@ -32,7 +32,7 @@ userRoutes.post("/login", async (request, response) => {
     }
 
 
-    const token = jwt.sign({ id: user?.id, name: user?.name, roles: user?.roles, email: user?.email, isForeigner: user?.isForeigner}, "ctvi-secret", { expiresIn: "8h" })
+    const token = jwt.sign({...user}, "ctvi-secret", { expiresIn: "8h" })
 
     return response.status(200).json({user, token});
 })
