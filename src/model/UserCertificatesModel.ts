@@ -12,13 +12,13 @@ export class UserCertificatesModel{
     @ManyToOne(()=> CertificateModel, certificate=>certificate.userCertificate)
     certificate: CertificateModel
 
-    @ManyToOne(()=> UserModel)
+    @ManyToOne(()=> UserModel, user=>user.certificates)
     user: UserModel
 
     @Column({name:'expire_date', nullable:true})
     expireDate?: Date
 
-    @Column({type:'enum', enum:certificateStatusEnum, default:certificateStatusEnum.Valid})
+    @Column({type:'enum', enum:certificateStatusEnum, default:certificateStatusEnum.Pending})
     status: certificateStatusEnum
 
 }

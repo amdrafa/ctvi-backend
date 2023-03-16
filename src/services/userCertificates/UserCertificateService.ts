@@ -11,11 +11,13 @@ export class UserCertificatesService implements IUserInterfaceService{
 
     async create(request: Request): Promise<UserCertificatesModel> {
         let userCertificate: UserCertificatesModel = request.body
-        let dates: string[] = userCertificate.certificate.expirationDate.split(' ')
-        //userCertificate.expireDate = moment().add(moment.duration(dates[0], dates[1])).toDate()
+        if(userCertificate.certificate.expirationDate){
+            let dates: string[] = userCertificate.certificate.expirationDate.split(' ')
+            userCertificate.expireDate = moment().add((dates[0], dates[1])).toDate()
+        }
         return await this.repository.create(userCertificate)
     }
-    async list(request: Request): Promise<UserCertificatesModel[]> {
+    async list(): Promise<UserCertificatesModel[]> {
         return await this.repository.find()
     }
     async listById(request: Request): Promise<UserCertificatesModel> {

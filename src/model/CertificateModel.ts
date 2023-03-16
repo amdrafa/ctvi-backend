@@ -8,8 +8,8 @@ export class CertificateModel{
     @PrimaryGeneratedColumn()
     id?: number;
 
-    @Column({name:"expiration_date"})
-    expirationDate: string
+    @Column({name:"expiration_date", nullable:true})
+    expirationDate?: string
 
     @Column({name: 'certificate_name'})
     certificateName: string;

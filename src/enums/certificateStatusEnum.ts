@@ -1,4 +1,5 @@
 export enum certificateStatusEnum{
-    Valid = 'valid',
-    Expired = 'expired'
+    Pending = 'Pending',
+    Valid = 'Valid',
+    Expired = 'Expired'
 }
