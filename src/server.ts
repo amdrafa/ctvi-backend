@@ -12,7 +12,7 @@ TypeORMDataSource.initialize()
     .catch((error) => console.log("Error: " + error))
 
     const app = express();
-    app.use('/', express.static(path.resolve(__dirname, 'uploads')))
+    app.use(express.static('uploads'))
     app.use(cors())
     app.use(express.json());
     app.use(router);
