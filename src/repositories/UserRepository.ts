@@ -6,15 +6,15 @@ export class UserRepository{
     repository = TypeORMDataSource.getRepository(UserModel)
 
     public async getAllUsers(): Promise<UserModel[]> {
-        return await this.repository.find()
+        return await this.repository.find({relations:{certificates:true, company:{}}})
     }
 
     public async getUserById(id: number): Promise<UserModel> {
-        return await this.repository.findOneBy({id: id})
+        return await this.repository.findOne({where:{id: id}, relations:{certificates:true, company:{}}})
     }
 
     public async getUserByIdWithCertificates(id: number): Promise<UserModel> {
-        return await this.repository.findOne({where:{id: id}, relations:{certificates:true}});
+        return await this.repository.findOne({where:{id: id}, relations:{certificates:true, company:{users:false}}});
     }
 
     public async createUser(user: UserModel): Promise<UserModel> {

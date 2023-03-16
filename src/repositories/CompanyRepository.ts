@@ -7,11 +7,11 @@ export class CompanyRepository{
     repository = TypeORMDataSource.getRepository(CompanyModel)
 
     public async getAllCompanies(): Promise<CompanyModel[]> {
-        return await this.repository.find()
+        return await this.repository.find({relations:{users:true}})
     }
 
     public async getCompanyByID(id: number): Promise<CompanyModel>{
-        return await this.repository.findOneBy({id:id})
+        return await this.repository.findOne({where:{id:id}, relations:{users:true}})
     }
 
     public async createCompany(company: CompanyModel): Promise<CompanyModel>{

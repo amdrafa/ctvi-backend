@@ -33,7 +33,7 @@ export class CompanyModel{
     @UpdateDateColumn({ name: 'updated_at', nullable: true})
     updatedAt: Date;
 
-    @OneToMany(() => UserModel, user => user.company, {cascade:true, eager: true})
+    @OneToMany(() => UserModel, user => user.company)
     public users: UserModel[];
     
 }
