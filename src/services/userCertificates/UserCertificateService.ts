@@ -1,8 +1,10 @@
-import { Request } from "express";
+import { request, Request, RequestHandler } from "express";
 import moment from "moment";
 import { UpdateResult } from "typeorm";
 import { UserCertificatesModel } from "../../model/UserCertificatesModel";
 import { UserCertificatesRepository } from "../../repositories/UserCertificatesRepository";
+import { CertificateService } from "../certificate/CertificateService";
+import { UserService } from "../user/UserService";
 import { IUserInterfaceService } from "./IUserCertificates";
 
 export class UserCertificatesService implements IUserInterfaceService{
@@ -16,6 +18,22 @@ export class UserCertificatesService implements IUserInterfaceService{
             userCertificate.expireDate = moment().add((dates[0], dates[1])).toDate()
         }
         return await this.repository.create(userCertificate)
+    }
+
+    async createWithIdsAndFileName(request : Request, fileName:string): Promise<UserCertificatesModel>{
+        let userService = new UserService()
+        let certificateService = new CertificateService()
+
+        const user = await userService.listById(Number(request.params.userId))
+        request.params.id = request.params.certificateId
+        const certificate = await certificateService.listByID(request)
+        let obj = await this.repository.create({user, certificate})
+        obj.fileName = fileName
+        if(obj.certificate.expirationDate){
+            let dates: string[] = obj.certificate.expirationDate.split(' ')
+            obj.expireDate = moment().add((dates[0], dates[1])).toDate()
+        }
+        return await this.repository.update(obj)
     }
     async list(): Promise<UserCertificatesModel[]> {
         return await this.repository.find()

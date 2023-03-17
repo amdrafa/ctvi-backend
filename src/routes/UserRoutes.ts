@@ -4,6 +4,8 @@ import { UserService } from '../services/user/UserService';
 import jwt from 'jsonwebtoken';
 import multer from 'multer';
 import { error } from 'console';
+import { UserCertificatesService } from '../services/userCertificates/UserCertificateService';
+import { CertificateService } from '../services/certificate/CertificateService';
 
 export const userRoutes = Router();
 
@@ -117,6 +119,8 @@ const storage = multer.diskStorage({
 
         // Indica o novo nome do arquivo:
         cb(null, `${novoNomeArquivo}.${extensaoArquivo}`)
+        let userCertificateService = new UserCertificatesService()
+        userCertificateService.createWithIdsAndFileName(req, `${novoNomeArquivo}.${extensaoArquivo}`)
     }
 });
 

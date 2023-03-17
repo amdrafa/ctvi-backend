@@ -15,10 +15,10 @@ import { UserCertificatesModel } from '../model/UserCertificatesModel';
 
 export const TypeORMDataSource = new DataSource({
     type: "postgres",
-    host: "localhost",
+    host: "dsa-ctvi-server.postgres.database.azure.com",
     port: 5432,
-    username: "postgres",
-    password: "123456",
+    username: "CtviAdmin",
+    password: "@dmin8548@",
     database: "ctvi",
     synchronize: true,
     entities: [UserModel, CompanyModel, ResourceModel, BookingModel, ScheduleModel, TermsModel, EquipmentModel, MonitoringModel, CertificateModel, VehicleTypeModel, InviteModel, UserCertificatesModel],

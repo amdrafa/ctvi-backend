@@ -7,7 +7,7 @@ import { UserModel } from "./UserModel";
 export class UserCertificatesModel{
 
     @PrimaryGeneratedColumn()
-    id:number
+    id?: number
 
     @ManyToOne(()=> CertificateModel, certificate=>certificate.userCertificate)
     certificate: CertificateModel
@@ -19,6 +19,9 @@ export class UserCertificatesModel{
     expireDate?: Date
 
     @Column({type:'enum', enum:certificateStatusEnum, default:certificateStatusEnum.Pending})
-    status: certificateStatusEnum
+    status?: certificateStatusEnum
+
+    @Column({name:'file_name', nullable:true})
+    fileName?: string
 
 }
