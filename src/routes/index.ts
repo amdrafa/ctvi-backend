@@ -14,7 +14,7 @@ import { inviteRoutes } from './InviteRoutes';
 export const router = Router()
 
 router.use("/user", userRoutes);
-//router.use(ValidateToken);
+router.use(ValidateToken);
 router.use('/monitoring', monitoringRoute)
 router.use("/equipment", equipementRoutes)
 router.use("/terms", termsRoutes)
