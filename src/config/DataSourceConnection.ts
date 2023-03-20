@@ -23,4 +23,5 @@ export const TypeORMDataSource = new DataSource({
     synchronize: true,
     entities: [UserModel, CompanyModel, ResourceModel, BookingModel, ScheduleModel, TermsModel, EquipmentModel, MonitoringModel, CertificateModel, VehicleTypeModel, InviteModel, UserCertificatesModel],
     logging: false,
+    ssl: {rejectUnauthorized: false}
 })
